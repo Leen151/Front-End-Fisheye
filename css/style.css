@@ -39,12 +39,34 @@ h1 {
     flex-direction: column;
 }
 
+.photographer_section article img {    
+    height: 200px;
+    width: 200px;
+    border-radius: 100px; 
+    object-fit: cover;
+    flex-shrink: 0; 
+}
+
 .photographer_section article h2 {
     color: #D3573C;
     font-size: 36px;
+    margin: 20px 0 0 0;
 }
 
-.photographer_section article img {
-    height: 200px;
-    width: 200px;
+.photographer_section article h3 {
+    color: #901C1C;
+    font-size: 13px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.photographer_section article .description {
+    font-size: 10px;
+    margin: 3px 0;
+}
+
+.photographer_section article .price {
+    color: #757575;
+    font-size: 9px;
+    margin: 0;
 }
