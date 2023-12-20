@@ -31,6 +31,11 @@ h1 {
     margin-top: 100px;
 }
 
+.photographer_section a{
+    text-decoration: none;
+    color: black;
+}
+
 .photographer_section article {
     justify-self: center;
     display: flex;
@@ -45,6 +50,9 @@ h1 {
     border-radius: 100px; 
     object-fit: cover;
     flex-shrink: 0; 
+
+    /* transition: transform; 
+    transform: scale(1.5);  */
 }
 
 .photographer_section article h2 {
