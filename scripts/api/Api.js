@@ -10,11 +10,14 @@ class Api {
     async get() {
         return fetch(this._url)
             .then(res => res.json())
-            //.then(res => res.photographers)
-            .catch(err => console.log('an error occurs', err))
+            .catch(err => console.log('an error occurs', err));
+    }
+
+    async getById(id, typeData) {
+        return this.get()
+            .then(data => data[typeData].find(item => item.id === id))
     }
 }
-
 
 class PhotographerApi extends Api {
     /**
@@ -28,5 +31,9 @@ class PhotographerApi extends Api {
     async getPhotographers() {
         return await this.get()
             .then(data => data.photographers);
+    }
+
+    async getPhotographerById(id){
+        return this.getById(id, 'photographers');
     }
 }

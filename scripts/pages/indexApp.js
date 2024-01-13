@@ -1,4 +1,4 @@
-class Index{
+class IndexApp {
     constructor() {
         this.photographersSection = document.querySelector(".photographer_section");
         this.photographersApi = new PhotographerApi("../../data/photographers.json");
@@ -19,6 +19,6 @@ class Index{
     }
 }
 
-const index = new Index();
+const index = new IndexApp();
 index.main();
 

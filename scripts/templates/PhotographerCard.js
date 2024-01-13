@@ -9,22 +9,18 @@ class PhotographerCard {
         const article = document.createElement('article');
         article.classList.add("photographer");
 
-        const href = window.location.href + id;
-        const alt =  "portrait de " + name;
-        const localisation = city + ", " + country;
-        const nameClass = name.trim().split(' ').join('-');
-
+        console.log(id + "id")
         article.innerHTML = `
-            <a href="${href}">
+            <a href="photographer.html?photographer=${id}">
               <div class="img-container" >
-                <img src="${this._photographer.portrait}" class="photographer-portrait" alt="${alt}">
+                <img src="${this._photographer.portrait}" class="photographer-picture" alt="photo portrait de ${name}">
               </div>
               <h2 class="photographer-name">
                 ${name}
               </h2>
             </a>
 <!--            <div class="text-container">-->
-              <p class="localisation">${localisation}</p>
+              <p class="localisation">${city}, ${country}</p>
               <p class="description">${this._photographer.tagline}</p>
               <p class="price">${this._photographer.price}€/jour</p>
 <!--            </div>-->
