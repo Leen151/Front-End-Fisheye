@@ -4,23 +4,20 @@ class PhotographerCard {
     }
 
     getUserCardDOM() {
-        const { name, id, city, country, portrait, tagline, price } = this._photographer;
-
         const article = document.createElement('article');
         article.classList.add("photographer");
 
-        console.log(id + "id")
         article.innerHTML = `
-            <a href="photographer.html?photographer=${id}">
+            <a href="photographer.html?photographer=${this._photographer.id}">
               <div class="img-container" >
-                <img src="${this._photographer.portrait}" class="photographer-picture" alt="photo portrait de ${name}">
+                <img src="${this._photographer.portrait}" class="photographer-picture" alt="photo portrait de ${this._photographer.name}">
               </div>
               <h2 class="photographer-name">
-                ${name}
+                ${this._photographer.name}
               </h2>
             </a>
 <!--            <div class="text-container">-->
-              <p class="localisation">${city}, ${country}</p>
+              <p class="localisation">${this._photographer.city}, ${this._photographer.country}</p>
               <p class="description">${this._photographer.tagline}</p>
               <p class="price">${this._photographer.price}€/jour</p>
 <!--            </div>-->
