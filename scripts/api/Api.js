@@ -37,3 +37,37 @@ class PhotographerApi extends Api {
         return this.getById(id, 'photographers');
     }
 }
+
+class MediaApi extends Api {
+    /**
+     *
+     * @param {string} url
+     */
+    constructor(url) {
+        super(url);
+    }
+
+    async getPhotosByPhotographerId(id){
+        return this.get()
+        .then(data => data.media
+            .filter(item => item.photographerId === id && item.hasOwnProperty('image')))
+    }
+
+    async getVideosByPhotographerId(id){
+        return this.get()
+        .then(data => data.media
+            .filter(item => item.photographerId === id && item.hasOwnProperty('video')))
+    }
+
+    async getLikesByPhotographerId(id){
+        return this.get()
+            .then(data => data.media
+                .filter(item => item.photographerId === id)
+                .map(item => item.likes)
+            );
+    }
+
+    async getMediaById(id){
+        return this.getById(id, 'media');
+    }
+}

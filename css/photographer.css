@@ -1,11 +1,113 @@
-#contact_modal {
-    display: none;
-}
-
-.photograph-header {
+.photographer-infos {
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
+    width: auto;
+    display: grid;
+    grid-template-columns: 1fr 200px 1fr;
+    align-items: center;
+}
+
+.photographer-infos button{
+    align-self: center;
+    justify-self: center;
+}
+
+.photographer-infos .photographer-name{
+    font-size: 64px;
+    font-weight: 400;
+}
+.photographer-infos .photographer-name{
+    margin: 0;
+    line-height: 95%;
+}
+
+.infos_text{
+    margin-left: 50px;
+}
+.infos_text .localisation{
+    color: #901C1C;
+    font-size: 24px;
+}
+.infos_text .description{
+    color: #525252;
+    font-size: 18px;
+}
+
+.img-container{
+    margin-right: 50px;
+    justify-self: end;
+}
+
+.photographer-infos .price{
+    padding: 20px 30px;
+    margin: 0;
+    border-radius: 5px 5px 0 0 ;
+    background-color: #DB8876;
+
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    font-size: 24px;
+
+    display: flex;
+    align-items: center;
+}
+.photographer-infos .price svg{
+    margin-left: 4px;
+    margin-right: 65px ;
+}
+
+/* Gallery */
+.photographer-gallery{
+    margin: 0 100px;
+    display: grid;
+    grid-template-columns: repeat(3, 350px);
+    column-gap: 95px;
+    row-gap: 20px;
+}
+
+.photographer-gallery img,
+.photographer-gallery video{
+    height: 300px;
+    width: 350px;
+}
+
+.photographer-gallery img{
+    object-fit: cover;
+}
+
+.media-infos, .likes{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #901C1C;
+}
+
+.media-infos{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.title-media, .likes p{
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+}
+.likes svg{
+    margin-right: 2px;
+    margin-left: 4px;
+}
+
+.likes p{
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+
+/* Modal */
+#contact_modal {
+    display: none;
 }
 
 .contact_button {
@@ -13,19 +115,21 @@
     font-weight: bold;
     color: white;
     padding: 11px;
-    width: 170px;
+    width: auto;
     height: 70px;
     border: none;
     background-color: #901C1C;
+    font-family: "DM Sans", sans-serif;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.modal {
+#contact_modal {
+    display: none;
     border-radius: 5px;
     background-color: #DB8876;
     width: 50%;
-    display: flex;
+    /*display: flex;*/
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
@@ -33,16 +137,16 @@
     margin: auto;
 }
 
-.modal header {
+#contact_modal header {
     justify-content: space-between;
     width: 100%;
 }
 
-.modal header img {
+#contact_modal header img {
     cursor: pointer;
 }
 
-.modal header h2 {
+#contact_modal header h2 {
     font-size: 64px;
     font-weight: normal;
     text-align: center;
@@ -74,3 +178,4 @@ form input {
     border: none;
     border-radius: 5px;
 }
+

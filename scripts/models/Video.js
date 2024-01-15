@@ -22,7 +22,23 @@ class Video {
 	}
 
 	get video() {
-		return this._video;
+		switch (this._photographerId){
+			case 243:
+				return `/assets/medias/Mimi Keel/${this._video}`;
+			case 930:
+				return `/assets/medias/Ellie-Rose Wilkens/${this._video}`;
+			case 82:
+				return `/assets/medias/Tracy Galindo/${this._video}`;
+			case 527:
+				return `/assets/medias/Nabeel Bradford/${this._video}`;
+			case 925:
+				return `/assets/medias/Rhode Dubois/${this._video}`;
+			case 195:
+				return `/assets/medias/Marcel Nikolic/${this._video}`;	
+			default:
+			// par défaut si aucun cas ne correspond
+			return `/assets/404.jpg`;
+		}
 	}
 
 	get likes() {
