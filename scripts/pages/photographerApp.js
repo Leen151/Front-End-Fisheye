@@ -1,3 +1,6 @@
+import { gestionModal } from "../utils/contactForm.js";
+import { lightbox } from "../utils/lightbox.js";
+
 class PhotographerApp{
 	constructor() {
 		this.photographerPage = document.getElementById("main");
@@ -23,7 +26,6 @@ class PhotographerApp{
 		// calcul du total des likes //
 		let totalLikes = 0;
 		const likesData = await this.mediasApi.getLikesByPhotographerId(idUrl);
-		console.log(likesData);
 
 		for (let i = 0; i < likesData.length; i++) {
 			totalLikes += likesData[i];
@@ -36,17 +38,22 @@ class PhotographerApp{
 
 		/////// PARTIE GALERIE ///////
 		//////////////////////////////
-		const photosData = await this.mediasApi.getPhotosByPhotographerId(idUrl);
-		const videosData = await this.mediasApi.getVideosByPhotographerId(idUrl);
-		console.log(photosData);
-		console.log(videosData);
-		
-		// // Ici, je transforme mon tableau de données en un tableau d'objet Movie grace au Model appelé par le factory
-		const Photos = photosData.map(photo => new MediasFactory(photo, "photo"));
-		const Videos = videosData.map(video => new MediasFactory(video, "video"));
-		
-		//on rassemble les 2 tableaux
-		const FullMedia = Photos.concat(Videos);
+		// Récupération des données
+		const mediaData = await this.mediasApi.getMediaByPhotographerId(idUrl);
+
+		// je récupère le nom du photographe pour le paser en paramètre au factory
+		const photographerName = photographer.name;
+
+		// Ici, on transforme le tableau de données en un tableau d'objet Movie grace au Model appelé par le factory
+		// le model appelé est conditionné selon que l'objet retourné à un attribut image ou vidéo
+		const allMedia = [];
+		mediaData.forEach(media => {
+			if (media.image) {
+				allMedia.push(new MediasFactory(media, "photo", photographer.name));
+			} else if (media.video) {
+				allMedia.push(new MediasFactory(media, "video", photographer.name));
+			}
+		});
 
 		// création de la balise section pour la galerie
 		const section = document.createElement("section");
@@ -54,11 +61,14 @@ class PhotographerApp{
 		this.photographerPage.appendChild(section);
 
 		// pour chaque valeur du tableau, on crée une card Media selon le template défini
-		FullMedia
+		allMedia
 			.forEach(media => {
 				const template = new MediaCard(media);
 				section.appendChild(template.getMediaCardDOM());
 			})
+
+		gestionModal();
+		lightbox();
 	}
 }
 

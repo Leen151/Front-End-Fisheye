@@ -16,6 +16,24 @@ class Api {
     async getById(id, typeData) {
         return this.get()
             .then(data => data[typeData].find(item => item.id === id))
+        // return fetch(this._url)
+        //     .then(res => res.json())
+        //     .then(data => {
+        //
+        //         if (typeData) {
+        //             data = data[typeData]; //donnera par ex: data.photographers
+        //         }
+        //         const filteredData = data.find(item => item.id === id);
+        //         if (filteredData) {
+        //             data = filteredData;
+        //         } else {
+        //             console.log(`Aucune correspondance trouvée pour l'ID : ${id}`);
+        //             data = null;
+        //         }
+        //     })
+        //     .catch(err => {
+        //         console.log('Une erreur s\'est produite', err);
+        //     });
     }
 }
 
@@ -47,17 +65,23 @@ class MediaApi extends Api {
         super(url);
     }
 
-    async getPhotosByPhotographerId(id){
+    async getMediaByPhotographerId(id){
         return this.get()
-        .then(data => data.media
-            .filter(item => item.photographerId === id && item.hasOwnProperty('image')))
+            .then(data => data.media
+                .filter(item => item.photographerId === id))
     }
 
-    async getVideosByPhotographerId(id){
-        return this.get()
-        .then(data => data.media
-            .filter(item => item.photographerId === id && item.hasOwnProperty('video')))
-    }
+    // async getPhotosByPhotographerId(id){
+    //     return this.get()
+    //     .then(data => data.media
+    //         .filter(item => item.photographerId === id && item.hasOwnProperty('image')))
+    // }
+    //
+    // async getVideosByPhotographerId(id){
+    //     return this.get()
+    //     .then(data => data.media
+    //         .filter(item => item.photographerId === id && item.hasOwnProperty('video')))
+    // }
 
     async getLikesByPhotographerId(id){
         return this.get()

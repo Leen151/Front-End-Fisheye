@@ -1,5 +1,5 @@
 class Video {
-	constructor(video) {
+	constructor(video, photographerName) {
 		this._id = video.id;
 		this._photographerId = video.photographerId;
 		this._title = video.title;
@@ -7,6 +7,7 @@ class Video {
 		this._likes = video.likes;
 		this._date = video.date;
 		this._price = video.price;
+		this._photographerName = photographerName;
 	}
 
 	get id() {
@@ -22,23 +23,24 @@ class Video {
 	}
 
 	get video() {
-		switch (this._photographerId){
-			case 243:
-				return `/assets/medias/Mimi Keel/${this._video}`;
-			case 930:
-				return `/assets/medias/Ellie-Rose Wilkens/${this._video}`;
-			case 82:
-				return `/assets/medias/Tracy Galindo/${this._video}`;
-			case 527:
-				return `/assets/medias/Nabeel Bradford/${this._video}`;
-			case 925:
-				return `/assets/medias/Rhode Dubois/${this._video}`;
-			case 195:
-				return `/assets/medias/Marcel Nikolic/${this._video}`;	
-			default:
-			// par défaut si aucun cas ne correspond
-			return `/assets/404.jpg`;
-		}
+		// switch (this._photographerId){
+		// 	case 243:
+		// 		return `/assets/medias/Mimi Keel/${this._video}`;
+		// 	case 930:
+		// 		return `/assets/medias/Ellie-Rose Wilkens/${this._video}`;
+		// 	case 82:
+		// 		return `/assets/medias/Tracy Galindo/${this._video}`;
+		// 	case 527:
+		// 		return `/assets/medias/Nabeel Bradford/${this._video}`;
+		// 	case 925:
+		// 		return `/assets/medias/Rhode Dubois/${this._video}`;
+		// 	case 195:
+		// 		return `/assets/medias/Marcel Nikolic/${this._video}`;
+		// 	default:
+		// 	// par défaut si aucun cas ne correspond
+		// 	return `/assets/404.jpg`;
+		// }
+		return `/assets/medias/${this._photographerName}/${this._video}`;
 	}
 
 	get likes() {

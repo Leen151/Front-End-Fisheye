@@ -16,15 +16,15 @@
       <a href="index.html"><img src="assets/logo.png" class="logo" alt="fisheye logo"/></a>
     </header>
     <main id="main" class="main">
-      <div class="photograph-header">
-        <button class="contact_button">Contactez-moi</button>
+
+      <div id="contact_modal">
+      </div>
+      <div id="lightbox">
+        <p>TOTO</p>
       </div>
     </main>
 
-    <div id="contact_modal">
-    </div>
-    <div id="lighbox">
-    </div>
+
 
     <!-- Factory-->
     <script src="scripts/factories/MediasFactory.js"></script>
@@ -38,9 +38,10 @@
     <!-- Api -->
     <script src="scripts/api/Api.js"></script>
     <!-- Entry point -->
-    <script src="/scripts/pages/photographerApp.js"></script>
+    <script type="module" src="/scripts/pages/photographerApp.js"></script>
 
-    <script src="/scripts/utils/contactForm.js"></script>
+    <script type="module" src="/scripts/utils/contactForm.js"></script>
+    <script type="module" src="/scripts/utils/lightbox.js"></script>
 
   </body>
 </html>
