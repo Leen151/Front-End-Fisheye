@@ -1,13 +1,13 @@
 class PhotographerCard {
-    constructor(photographer) {
-        this._photographer = photographer;
-    }
+	constructor(photographer) {
+		this._photographer = photographer;
+	}
 
-    getUserCardDOM() {
-        const article = document.createElement('article');
-        article.classList.add("photographer");
+	getUserCardDOM() {
+		const article = document.createElement("article");
+		article.classList.add("photographer");
 
-        article.innerHTML = `
+		article.innerHTML = `
             <a href="photographer.html?photographer=${this._photographer.id}">
               <div class="img-container" >
                 <img src="${this._photographer.portrait}" class="photographer-picture" alt="photo portrait de ${this._photographer.name}">
@@ -23,6 +23,6 @@ class PhotographerCard {
 <!--            </div>-->
         `;
 
-        return (article);
-    }
+		return (article);
+	}
 }

@@ -16,7 +16,7 @@ class PhotographerApp{
 		const urlParams = new URLSearchParams(window.location.search);
 		// on recupère le paramètre "photographer" dans l'url qui correspond à l'id
 		// et on le parse en int afin de pouvoir faire la comparaison avec les ids des données json
-		const idUrl = parseInt(urlParams.get('photographer'));
+		const idUrl = parseInt(urlParams.get("photographer"));
 
 		// on récupère les données du photographe
 		const photographerData = await this.photographersApi.getPhotographerById(idUrl);
@@ -65,7 +65,7 @@ class PhotographerApp{
 			.forEach(media => {
 				const template = new MediaCard(media);
 				section.appendChild(template.getMediaCardDOM());
-			})
+			});
 
 		gestionModal();
 		lightbox();

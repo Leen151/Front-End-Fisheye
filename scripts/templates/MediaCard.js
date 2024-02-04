@@ -4,7 +4,7 @@ class MediaCard {
 	}
 
 	getMediaCardDOM() {
-		const article = document.createElement('article');
+		const article = document.createElement("article");
 		article.classList.add("media-card");
 
 		if (this._media.image) {
@@ -19,7 +19,7 @@ class MediaCard {
 						</svg>
 					</div>
 				</div>
-		`
+		`;
 		} else if (this._media.video) {
 			article.innerHTML = `
 				<video src="${this._media.video}" controls></video>
@@ -32,7 +32,7 @@ class MediaCard {
 						</svg>						
 					</div>
 				</div>
-		`
+		`;
 		} else {
 			article.innerHTML = "Aucun contenu multimédia disponible";
 		}

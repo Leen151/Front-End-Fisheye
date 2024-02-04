@@ -4,7 +4,7 @@ class PhotographerProfile {
 	}
 
 	getPhotographerPageDOM(totalLikes) {
-		const section = document.createElement('section');
+		const section = document.createElement("section");
 		section.classList.add("photographer-infos");
 		//const section = document.querySelector(".photographer-infos")
 
