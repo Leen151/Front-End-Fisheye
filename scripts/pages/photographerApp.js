@@ -1,5 +1,4 @@
-import { gestionModal } from "../utils/contactForm.js";
-import { lightbox } from "../utils/lightbox.js";
+import { modal } from "../utils/modal.js";
 
 class PhotographerApp{
 	constructor() {
@@ -67,8 +66,7 @@ class PhotographerApp{
 				section.appendChild(template.getMediaCardDOM());
 			});
 
-		gestionModal();
-		lightbox();
+		modal();
 	}
 }
 
