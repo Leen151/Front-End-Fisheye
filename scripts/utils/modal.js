@@ -34,30 +34,36 @@ function modal(photographerName) {
 		modalContent.classList.add("modal-content");
 
 
-		// Variables pour le contenu et la classe de modal-content
+		// déclaration de variables pour le contenu et la class de modal-content
 		let containerContent, modalContentClass;
 
-		// Vérifiez quel élément a été cliqué entre .media-card et .contact_button
+		// création contenu et class selon le clic sur .media-card ou .contact_button
 		if (clickedElement.classList.contains("media-card")) {
 			// appel le contenu de la fonction lightbox
 			containerContent = "<p>Ici sera affiché le contenu de la futur lightbox.</p>";
 			modalContentClass = "lightbox";
+			buildModal(containerContent, modalContentClass);
 		} else if (clickedElement.classList.contains("contact_button")) {
 			// appel le contenu de la focntion contactform
 			containerContent = contactForm(photographerName);
 			modalContentClass = "contactForm";
-			sendContactForm();
+			buildModal(containerContent, modalContentClass);
+			sendContactForm(modalContent, photographerName);
 		}
 
-		modalContent.innerHTML = `
-            ${containerContent}
-<!--			<button id="closeModalBtn">x</button>-->
-        `;	
+		function buildModal(containerContent, modalContentClass){
+			//ajout du contenu selectionné
+			modalContent.innerHTML = `
+			${containerContent}
+			`;
 
-		// Ajoute la classe spécifique à modal-content selon le contenu
-		modalContent.classList.add(modalContentClass);
+			// ajout de la class selectionnée
+			modalContent.classList.add(modalContentClass);
+		}
 
-		// Gestionnaires d'événements pour le bouton de fermeture et l'overlay
+
+
+		// fermeture de la modal au clic sur la croix ou hors de la modal
 		const closeModalBtn = modalContent.querySelector("#closeModalBtn");
 
 		closeModalBtn.addEventListener("click", () => {
@@ -70,10 +76,9 @@ function modal(photographerName) {
 			modalContainer.remove();
 		});
 
-		// hiérarchies des éléments de la modal
+
 		modalContainer.appendChild(modalOverlay);
 		modalContainer.appendChild(modalContent);
-
 		body.appendChild(modalContainer);
 	}
 }

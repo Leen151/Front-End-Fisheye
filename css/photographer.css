@@ -110,7 +110,7 @@
     font-weight: bold;
     color: white;
     padding: 11px;
-    width: auto;
+    width: 180px;
     height: 70px;
     border: none;
     background-color: #901C1C;
@@ -150,8 +150,9 @@
 .contactForm {
     border-radius: 5px;
     background-color: #DB8876;
-    width: 50%;
-    padding: 35px;
+    width: 650px;
+    max-width: 90%;
+    padding: 25px 35px 35px 35px;
     margin: auto;
 }
 
@@ -166,11 +167,14 @@
 
 .contactForm header h2 {
     margin: 0;
-    font-size: 64px;
+    font-size: 62px;
     font-weight: normal;
+    line-height: 1.1;
+    padding-bottom: 20px;
 }
 
 .contactForm header img {
+    margin-top: 10px;
     cursor: pointer;
 }
 
@@ -194,12 +198,29 @@ form div {
     margin-bottom: 26px;
 }
 
-form input {
-    width: 100%;
-    height: 68px;
+form input,
+form textarea{
+    width: 629px;
     border: none;
     border-radius: 5px;
+    font-size: 24px;
+    padding: 15px 10px;
 }
+
+.contactForm .error{
+    color: #901C1C;
+}
+
+.succes-msg header{
+    display: flex;
+    justify-content: end;
+}
+
+.succes-msg p{
+    font-size: 50px;
+    text-align: center;
+}
+
 
 
 
