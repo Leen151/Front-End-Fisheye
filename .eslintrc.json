@@ -4,28 +4,29 @@
         "es2021": true
     },
     "extends": "eslint:recommended",
+    "overrides": [
+    ],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
+    "globals": {
+        "node": true,
+        "browser": true,
+        "document": true
+    },
     "rules": {
-        "indent": [
-            "error",
-            "tab"
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "no-unused-vars": "off", //  Pour détecter les variables déclarées mais non utilisées
-        "no-undef": "off"
+        "linebreak-style": 0,
+        "implicit-arrow-linebrek": 0,
+        "function-paren-newline": 0,
+        "indent": ["error", "tab"], //Pour forcer l'indentation avec 2 espaces
+        "semi": ["error", "always"], // Pour obliger l'utilisation de point-virgule à la fin de chaque instruction  ou  "semi": 0 pour ne pas gérer les ;
+        "quotes": ["error", "double"], //Pour utiliser des guillemets simples plutôt que des guillemets doubles pour les chaînes de caractères
+        //"no-console": "warn", // Pour avertir lorsque vous utilisez console.log() dans le code, ce qui est généralement indésirable en production
+        "no-unused-vars": "error", //  Pour détecter les variables déclarées mais non utilisées
+        //"max-len": ["error", { "code": 80 }], // Pour limiter la longueur des lignes de code
+        "no-var": "error" // our encourager l'utilisation de let ou const au lieu de var
     }
 }
+
+
