@@ -1,7 +1,7 @@
-import { contactForm } from "./contactForm.js";
+import { contactForm, sendContactForm } from "./contactForm.js";
 // import { lightbox } from "./lightbox.js";
 
-function modal() {
+function modal(photographerName) {
 	// Sélection des éléments cliquables
 	const clickableElements = document.querySelectorAll(".media-card, .contact_button");
 	const body = document.querySelector("body");
@@ -41,16 +41,17 @@ function modal() {
 		if (clickedElement.classList.contains("media-card")) {
 			// appel le contenu de la fonction lightbox
 			containerContent = "<p>Ici sera affiché le contenu de la futur lightbox.</p>";
-			modalContentClass = "css-lightbox";
+			modalContentClass = "lightbox";
 		} else if (clickedElement.classList.contains("contact_button")) {
 			// appel le contenu de la focntion contactform
-			containerContent = contactForm();
-			modalContentClass = "css-contactform";
+			containerContent = contactForm(photographerName);
+			modalContentClass = "contactForm";
+			sendContactForm();
 		}
 
 		modalContent.innerHTML = `
             ${containerContent}
-			<button id="closeModalBtn">x</button>
+<!--			<button id="closeModalBtn">x</button>-->
         `;	
 
 		// Ajoute la classe spécifique à modal-content selon le contenu

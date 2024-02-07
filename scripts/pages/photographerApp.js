@@ -66,7 +66,7 @@ class PhotographerApp{
 				section.appendChild(template.getMediaCardDOM());
 			});
 
-		modal();
+		modal(photographer.name);
 	}
 }
 
