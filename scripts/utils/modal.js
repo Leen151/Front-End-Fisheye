@@ -1,7 +1,8 @@
 import { contactForm, sendContactForm } from "./contactForm.js";
-// import { lightbox } from "./lightbox.js";
+import { lightbox } from "./lightbox.js";
 
-function modal(photographerName) {
+function modal(photographerName, allMedia) {
+
 	// Sélection des éléments cliquables
 	const clickableElements = document.querySelectorAll(".media-card, .contact_button");
 	const body = document.querySelector("body");
@@ -18,6 +19,7 @@ function modal(photographerName) {
 			createModalModal(clickedElement);
 		}
 		body.classList.toggle("modal-active");
+		console.dir(clickedElement)
 	}
 
 	// Fonction pour créer la structure de la modal
@@ -40,9 +42,10 @@ function modal(photographerName) {
 		// création contenu et class selon le clic sur .media-card ou .contact_button
 		if (clickedElement.classList.contains("media-card")) {
 			// appel le contenu de la fonction lightbox
-			containerContent = "<p>Ici sera affiché le contenu de la futur lightbox.</p>";
+			containerContent = lightbox();
 			modalContentClass = "lightbox";
 			buildModal(containerContent, modalContentClass);
+			console.log(allMedia);
 		} else if (clickedElement.classList.contains("contact_button")) {
 			// appel le contenu de la focntion contactform
 			containerContent = contactForm(photographerName);
@@ -63,7 +66,7 @@ function modal(photographerName) {
 
 
 
-		// fermeture de la modal au clic sur la croix ou hors de la modal
+		// fermeture de la modal au clic sur la croix, hors de la modal ou sur echap
 		const closeModalBtn = modalContent.querySelector("#closeModalBtn");
 
 		closeModalBtn.addEventListener("click", () => {
@@ -76,6 +79,12 @@ function modal(photographerName) {
 			modalContainer.remove();
 		});
 
+		window.addEventListener("keydown", (event) =>{
+			if (event.key === "Escape" || event.key === "Esc") {
+				body.classList.remove("modal-active");
+				modalContainer.remove();
+			}
+		});
 
 		modalContainer.appendChild(modalOverlay);
 		modalContainer.appendChild(modalContent);

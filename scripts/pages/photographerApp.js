@@ -1,4 +1,6 @@
 import { modal } from "../utils/modal.js";
+// import { contactForm, sendContactForm } from "./contactForm.js";
+// import { lightbox } from "./lightbox.js";
 
 class PhotographerApp{
 	constructor() {
@@ -40,9 +42,6 @@ class PhotographerApp{
 		// Récupération des données
 		const mediaData = await this.mediasApi.getMediaByPhotographerId(idUrl);
 
-		// je récupère le nom du photographe pour le paser en paramètre au factory
-		const photographerName = photographer.name;
-
 		// Ici, on transforme le tableau de données en un tableau d'objet Movie grace au Model appelé par le factory
 		// le model appelé est conditionné selon que l'objet retourné à un attribut image ou vidéo
 		const allMedia = [];
@@ -66,7 +65,11 @@ class PhotographerApp{
 				section.appendChild(template.getMediaCardDOM());
 			});
 
-		modal(photographer.name);
+		console.log(allMedia);
+		modal(photographer.name, allMedia);
+
+
+
 	}
 }
 

@@ -2,20 +2,20 @@ function contactForm(photographerName) {
 	return `	
 	<header class="header-form">
 		<h2>Contactez-moi <br> ${photographerName}</h2>
-		<img src="assets/icons/close.svg" class="close_modal" id="closeModalBtn" alt="icone croix pour la fermeture de la modale" tabindex="0"/>
+		<img src="../../assets/icons/close.svg" class="close_modal" id="closeModalBtn" alt="icone croix pour la fermeture de la modale" tabindex="0"/>
 	</header>
 	<form class="contactFormBody">
 		<div>
-			<label for="first" class="firstLabel">Prénom</label><br>
-			<input class="text-control" type="text" id="first" name="first"><br>
+			<label for="first" class="firstLabel">Prénom</label>
+			<input class="text-control" type="text" id="first" name="first">
 			<span class="error" id="errorFirst"></span>
 			
-			<label for="last">Nom</label><br>
-			<input class="text-control" type="text" id="last" name="last"><br>
+			<label for="last">Nom</label>
+			<input class="text-control" type="text" id="last" name="last">
 			<span class="error" id="errorLast"></span>
 			
-			<label for="email">E-mail</label><br>
-			<input class="text-control" type="text" id="email" name="email"><br>
+			<label for="email">E-mail</label>
+			<input class="text-control" type="text" id="email" name="email">
 			<span class="error" id="errorEmail"></span>
 			
 			<label for="messageForm">Message</label> 
