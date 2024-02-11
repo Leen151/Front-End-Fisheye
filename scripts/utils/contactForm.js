@@ -2,7 +2,6 @@ function contactForm(photographerName) {
 	return `	
 	<header class="header-form">
 		<h2>Contactez-moi <br> ${photographerName}</h2>
-		<img src="../../assets/icons/close.svg" class="close_modal" id="closeModalBtn" alt="icone croix pour la fermeture de la modale" tabindex="0"/>
 	</header>
 	<form class="contactFormBody">
 		<div>
@@ -100,7 +99,7 @@ function sendContactForm(modalContent, photographerName) {
 
 			let modalSuccess = `
 				<header>
-					<img src="assets/icons/close.svg" class="close_modal" id="closeModalBtn" alt="icone croix pour la fermeture de la modale" tabindex="0"/>
+					<img src="../../assets/icons/close.svg" class="close_modal" id="closeModalBtn" alt="icone croix pour la fermeture de la modale"/>
 				</header>
 				<p class="div-success"> Votre message a été envoyé avec succès. </p>			 
 			`;

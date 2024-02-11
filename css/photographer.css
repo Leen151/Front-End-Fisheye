@@ -76,6 +76,9 @@
 .photographer-gallery img{
     object-fit: cover;
 }
+.media-card img{
+    cursor: pointer;
+}
 
 .media-infos, .likes{
     display: flex;
@@ -145,6 +148,18 @@
 .modal-content {
     padding: 20px;
     z-index: 9;
+    position: relative;
+}
+
+.modal-content .close_modal{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.contactForm .close_modal{
+    right: 35px;
+    top: 33px;
 }
 
 .contactForm {
@@ -218,30 +233,38 @@ form textarea{
 }
 
 .succes-msg p{
-    font-size: 50px;
+    font-size: 40px;
     text-align: center;
+    padding: 0 30px;
 }
 
 
 
 
+.lightbox{
+    display: flex;
+}
 
-/* Lightbox */
-/*#lightbox{*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    z-index: 5;*/
-/*    position: fixed;*/
-/*    background-color: #0000006b;*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    visibility: hidden;*/
-/*    color: red;*/
+.lightbox svg path {
+    fill: #901C1C;
+}
+
+/*.btnCloseLightbox{*/
+/*    position: relative;*/
+/*    left: -42px;*/
+/*    top: -100px;*/
 /*}*/
 
-/*#lightbox.active{*/
-/*    visibility: visible;*/
-/*}*/
+.imageLightbox img,
+.imageLightbox video{
+    height: 500px;
+    width: 500px;
+    object-fit: contain;
+}
+
+.leftBtn, .rightBtn{
+    position: relative;
+    top: 100px;
+}
+
+

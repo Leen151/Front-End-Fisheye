@@ -4,8 +4,10 @@ class MediaCard {
 	}
 
 	getMediaCardDOM() {
+		const class2 = this._media.id;
 		const article = document.createElement("article");
 		article.classList.add("media-card");
+		article.classList.add(class2);
 
 		if (this._media.image) {
 			article.innerHTML = `

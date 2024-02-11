@@ -1,6 +1,5 @@
-import { modal } from "../utils/modal.js";
-// import { contactForm, sendContactForm } from "./contactForm.js";
-// import { lightbox } from "./lightbox.js";
+import {lightbox, gestionLightbox} from "../utils/lightbox.js";
+import {contactForm, sendContactForm} from "../utils/contactForm.js";
 
 class PhotographerApp{
 	constructor() {
@@ -33,9 +32,13 @@ class PhotographerApp{
 		}
 
 		// on crée le html à afficher
-		const template = new PhotographerProfile(photographer);
-		this.photographerPage.appendChild(template.getPhotographerPageDOM(totalLikes));
+		const template = new PhotographerProfile(photographer, totalLikes);
+		this.photographerPage.appendChild(template.getPhotographerPageDOM());
 
+		// on récupére le bouton pour afficher le formulaire de contact
+		// on crée l'event listener
+		const contactButton = document.querySelector(".contact_button");
+		contactButton.addEventListener("click", () => toggleModal(contactButton));
 
 		/////// PARTIE GALERIE ///////
 		//////////////////////////////
@@ -60,16 +63,104 @@ class PhotographerApp{
 
 		// pour chaque valeur du tableau, on crée une card Media selon le template défini
 		allMedia
-			.forEach(media => {
+			.forEach((media) => {
 				const template = new MediaCard(media);
 				section.appendChild(template.getMediaCardDOM());
 			});
 
-		console.log(allMedia);
-		modal(photographer.name, allMedia);
+		const toto = document.querySelectorAll(".media-card");
+		// toto.forEach(
+		// 	(element) => element.addEventListener("click", () => toggleModal(element))
+		//  );
+		toto.forEach((element, index) => {
+			element.addEventListener("click", () => toggleModal(element, index));
+		});
 
+		/////// PARTIE MODALE ///////
+		/////////////////////////////
+		const body = document.querySelector("body");
 
+		// Fonction pour basculer l'état de la modal (active)
+		function toggleModal(clickedElement, index) {
+			const modalContainer = document.querySelector(".modal");
+			if (!modalContainer) {
+				createModal(clickedElement, index);
+			}
+			body.classList.toggle("modal-active");
+		}
 
+		// Fonction pour créer la structure de la modal
+		function createModal(clickedElement, index) {
+			// Eléments de la modal
+			const modalContainer = document.createElement("div");
+			modalContainer.classList.add("modal");
+			const modalOverlay = document.createElement("div");
+			modalOverlay.classList.add("modal-overlay");
+			const modalContent = document.createElement("div");
+			modalContent.classList.add("modal-content");
+
+			// déclaration de variables pour le contenu et la class de modal-content
+			let containerContent, modalContentClass;
+
+			// création contenu et class selon le clic sur .media-card ou .contact_button
+			if (clickedElement.classList.contains("media-card")) {
+				// appel le contenu de la fonction lightbox
+				containerContent = lightbox(clickedElement);
+				console.log(containerContent);
+
+				modalContentClass = "lightbox";
+				buildModal(containerContent, modalContentClass);
+
+				console.log(modalContent.innerHTML)
+				const btnLeft = modalContent.querySelector(".leftBtn");
+				btnLeft.addEventListener("click", () => gestionLightbox(allMedia, index));
+
+			} else if (clickedElement.classList.contains("contact_button")) {
+				// appel le contenu de la focntion contactform
+				containerContent = contactForm(photographer.name);
+				modalContentClass = "contactForm";
+				buildModal(containerContent, modalContentClass);
+				sendContactForm(modalContent, photographer.name);
+			}
+
+			// fonction qui crée le contenu de la modale et lui donne une class css selon les paramètres
+			function buildModal(containerContent, modalContentClass){
+				//ajout du contenu selectionné
+				modalContent.innerHTML = `
+				${containerContent}
+				<div class="close_modal" id="closeModalBtn">
+					<svg  width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white"/>
+					</svg>
+				</div>
+				`;
+				// ajout de la class selectionnée
+				modalContent.classList.add(modalContentClass);
+			}
+
+			// fermeture de la modal au clic sur la croix, hors de la modal ou sur echap
+			const closeModalBtn = modalContent.querySelector("#closeModalBtn");
+
+			closeModalBtn.addEventListener("click", () => {
+				body.classList.remove("modal-active");
+				modalContainer.remove();
+			});
+			modalOverlay.addEventListener("click", () => {
+				body.classList.remove("modal-active");
+				modalContainer.remove();
+			});
+			window.addEventListener("keydown", (event) =>{
+				if (event.key === "Escape" || event.key === "Esc") {
+					body.classList.remove("modal-active");
+					modalContainer.remove();
+				}
+			});
+
+			// construction du DOM
+			modalContainer.appendChild(modalOverlay);
+			modalContainer.appendChild(modalContent);
+			body.appendChild(modalContainer);
+		}
 	}
 }
 
