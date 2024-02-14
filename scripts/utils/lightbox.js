@@ -1,25 +1,87 @@
-function lightbox() {
+function lightbox(allMedia, index) {
+	// on récupère le titre de l'image dans le tableau en fonction de l'index
+	const imageTitle = allMedia[index].title;
 
-	//Elements du DOM
-	const lightbox = document.getElementById("lightbox");
-	console.log(lightbox);
-	const cardsOpenModal = document.querySelectorAll(".media-card");
-	console.log(cardsOpenModal);
-
-	// Écouteurs d'événements pour ouvrir la modal
-	cardsOpenModal.forEach((card) => card.addEventListener("click", toggleModal));
-
-	// fonction pour l'ouverture de la modal, on ajoute la class active à notre modal container
-	function toggleModal() {
-		lightbox.classList.toggle("active");
-		//createModalLightbox();
+	// on va ici récupérer le src du média et conditionné une balise selon qu'on a une image ou une video
+	let src = null;
+	let baliseMedia = null;
+	if(allMedia[index].image){
+		src = allMedia[index].image;
+		baliseMedia = `<img src="${src}" alt="${imageTitle}">`;
+	}
+	else if(allMedia[index].video){
+		src = allMedia[index].video;
+		baliseMedia = ` 
+		<video controls>
+			<source src="${src}" type="video/mp4">
+			Le navigateur ne supporte pas la lecture de vidéos.
+		</video>
+		`;
+	}
+	else {
+		return `
+			<img src="../../assets/404.jpg" alt="">
+		`;
 	}
 
+	return `
+	<div class="leftBtn">
+		<img src="../../assets/icons/chevron-left-solid.svg" alt="">
+	</div>
+	<div class="imageLightbox">		
+		${baliseMedia}
+		<h2>${imageTitle}</h2>
+	</div>
+	<div class="rightBtn">
+		<img src="../../assets/icons/chevron-right-solid.svg" alt="">
+	</div>
+	`;
+}
 
-	function createModalLightbox() {
+function updateIndexToPreviousMedia(tableLength, index){
+	console.log(index + " index");
 
+	if (index > 0){
+		return index - 1;
 	}
+	else if (index === 0){
+		//console.log(allMedia.length-1)
+		return tableLength - 1;
+	}
+}
+
+function updateIndexToNextMedia(tableLength, index){
+	console.log(index + " index");
+
+	if (index < tableLength - 1){
+		return index + 1;
+	}
+	else if (index === tableLength - 1){
+		return 0;
+	}
+}
+
+function UpdateContent(allMedia, index){
+	let baliseMedia = "";
+	if (allMedia[index].image) {
+		baliseMedia = `
+					<img src="${allMedia[index].image}" alt="${allMedia[index].title};">
+					`;
+	}
+	if (allMedia[index].video) {
+		baliseMedia = ` 
+					<video controls>
+						<source src="${allMedia[index].video}" type="video/mp4">
+						Le navigateur ne supporte pas la lecture de vidéos.
+					</video>
+					`;
+	}
+
+	return `
+	${baliseMedia}
+	<h2>${allMedia[index].title}</h2>
+	`;
 
 
 }
-export { lightbox };
+export { lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia, UpdateContent };

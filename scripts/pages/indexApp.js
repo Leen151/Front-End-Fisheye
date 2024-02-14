@@ -11,9 +11,9 @@ class IndexApp {
 		photographersData
 			.map(photographer => new Photographer(photographer))
 			.forEach(photographer => {
-				const Template = new PhotographerCard(photographer);
+				const template = new PhotographerCard(photographer);
 				this.photographersSection.appendChild(
-					Template.getUserCardDOM()
+					template.getPhotographerCardDOM()
 				);
 			});
 	}

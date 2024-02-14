@@ -3,7 +3,7 @@ class PhotographerCard {
 		this._photographer = photographer;
 	}
 
-	getUserCardDOM() {
+	getPhotographerCardDOM() {
 		const article = document.createElement("article");
 		article.classList.add("photographer");
 
