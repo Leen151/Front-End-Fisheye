@@ -60,4 +60,28 @@ function updateIndexToNextMedia(tableLength, index){
 		return 0;
 	}
 }
-export { lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia };
+
+function UpdateContent(allMedia, index){
+	let baliseMedia = "";
+	if (allMedia[index].image) {
+		baliseMedia = `
+					<img src="${allMedia[index].image}" alt="${allMedia[index].title};">
+					`;
+	}
+	if (allMedia[index].video) {
+		baliseMedia = ` 
+					<video controls>
+						<source src="${allMedia[index].video}" type="video/mp4">
+						Le navigateur ne supporte pas la lecture de vidéos.
+					</video>
+					`;
+	}
+
+	return `
+	${baliseMedia}
+	<h2>${allMedia[index].title}</h2>
+	`;
+
+
+}
+export { lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia, UpdateContent };

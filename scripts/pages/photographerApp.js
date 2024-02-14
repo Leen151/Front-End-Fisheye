@@ -1,4 +1,4 @@
-import {lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia} from "../utils/lightbox.js";
+import {lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia, UpdateContent} from "../utils/lightbox.js";
 import {contactForm, sendContactForm} from "../utils/contactForm.js";
 
 class PhotographerApp{
@@ -68,11 +68,9 @@ class PhotographerApp{
 				section.appendChild(template.getMediaCardDOM());
 			});
 
-		const toto = document.querySelectorAll(".media-card");
-		// toto.forEach(
-		// 	(element) => element.addEventListener("click", () => toggleModal(element))
-		//  );
-		toto.forEach((element, index) => {
+		const mediaCard = document.querySelectorAll(".media-card");
+
+		mediaCard.forEach((element, index) => {
 			element.addEventListener("click", () => toggleModal(element, index));
 		});
 
@@ -112,68 +110,25 @@ class PhotographerApp{
 
 				console.log(modalContent.innerHTML);
 				const btnLeft = modalContent.querySelector(".leftBtn");
+				const btnRight = modalContent.querySelector(".rightBtn");
+				const titi = modalContent.querySelector(".imageLightbox");
+
 				btnLeft.addEventListener("click", (event) => {
 					event.preventDefault();
 					let toto = updateIndexToPreviousMedia(allMedia.length, index);
 					index = toto;
-					console.log(toto + "index2");
 
-					const titi = modalContent.querySelector(".imageLightbox");
-					console.log(titi);
-
-					let baliseMedia = "";
-					if (allMedia[toto].image) {
-						baliseMedia = `
-						<img src="${allMedia[toto].image}" alt="${allMedia[toto].title};">
-						`;
-					}
-					if (allMedia[toto].video) {
-						baliseMedia = ` 
-						<video controls>
-							<source src="${allMedia[toto].video}" type="video/mp4">
-							Le navigateur ne supporte pas la lecture de vidéos.
-						</video>
-						`;
-					}
-
-					titi.innerHTML = `
-						${baliseMedia}
-						<h2>${allMedia[toto].title}</h2>
-					`;
-					console.log(titi.innerHTML)
+					titi.innerHTML = UpdateContent(allMedia, toto);
 				});
 
-				const btnRight = modalContent.querySelector(".rightBtn");
+
 				btnRight.addEventListener("click", (event) => {
 					event.preventDefault();
 					let toto = updateIndexToNextMedia(allMedia.length, index);
 					index = toto;
-					console.log(toto + "index2");
 
-					const titi = modalContent.querySelector(".imageLightbox");
-					console.log(titi);
+					titi.innerHTML = UpdateContent(allMedia, toto);
 
-					let baliseMedia = "";
-					if (allMedia[toto].image) {
-						baliseMedia = `
-					<img src="${allMedia[toto].image}" alt="${allMedia[toto].title};">
-					`;
-					}
-					if (allMedia[toto].video) {
-						baliseMedia = ` 
-					<video controls>
-						<source src="${allMedia[toto].video}" type="video/mp4">
-						Le navigateur ne supporte pas la lecture de vidéos.
-					</video>
-					`;
-					}
-
-					titi.innerHTML = `
-					${baliseMedia}
-					<h2>${allMedia[toto].title}</h2>
-					`;
-
-					console.log(titi.innerHTML)
 				});
 			} else if (clickedElement.classList.contains("contact_button")) {
 				// appel le contenu de la fonction contactform
