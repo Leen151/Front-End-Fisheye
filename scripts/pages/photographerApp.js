@@ -1,4 +1,4 @@
-import {lightbox, gestionLightbox} from "../utils/lightbox.js";
+import {lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia} from "../utils/lightbox.js";
 import {contactForm, sendContactForm} from "../utils/contactForm.js";
 
 class PhotographerApp{
@@ -84,13 +84,13 @@ class PhotographerApp{
 		function toggleModal(clickedElement, index) {
 			const modalContainer = document.querySelector(".modal");
 			if (!modalContainer) {
-				createModal(clickedElement, index);
+				createModal(clickedElement, index, allMedia);
 			}
 			body.classList.toggle("modal-active");
 		}
 
 		// Fonction pour créer la structure de la modal
-		function createModal(clickedElement, index) {
+		function createModal(clickedElement, index, allMedia) {
 			// Eléments de la modal
 			const modalContainer = document.createElement("div");
 			modalContainer.classList.add("modal");
@@ -105,18 +105,78 @@ class PhotographerApp{
 			// création contenu et class selon le clic sur .media-card ou .contact_button
 			if (clickedElement.classList.contains("media-card")) {
 				// appel le contenu de la fonction lightbox
-				containerContent = lightbox(clickedElement);
-				console.log(containerContent);
+				containerContent = lightbox(allMedia, index);
 
 				modalContentClass = "lightbox";
 				buildModal(containerContent, modalContentClass);
 
-				console.log(modalContent.innerHTML)
+				console.log(modalContent.innerHTML);
 				const btnLeft = modalContent.querySelector(".leftBtn");
-				btnLeft.addEventListener("click", () => gestionLightbox(allMedia, index));
+				btnLeft.addEventListener("click", (event) => {
+					event.preventDefault();
+					let toto = updateIndexToPreviousMedia(allMedia.length, index);
+					index = toto;
+					console.log(toto + "index2");
 
+					const titi = modalContent.querySelector(".imageLightbox");
+					console.log(titi);
+
+					let baliseMedia = "";
+					if (allMedia[toto].image) {
+						baliseMedia = `
+						<img src="${allMedia[toto].image}" alt="${allMedia[toto].title};">
+						`;
+					}
+					if (allMedia[toto].video) {
+						baliseMedia = ` 
+						<video controls>
+							<source src="${allMedia[toto].video}" type="video/mp4">
+							Le navigateur ne supporte pas la lecture de vidéos.
+						</video>
+						`;
+					}
+
+					titi.innerHTML = `
+						${baliseMedia}
+						<h2>${allMedia[toto].title}</h2>
+					`;
+					console.log(titi.innerHTML)
+				});
+
+				const btnRight = modalContent.querySelector(".rightBtn");
+				btnRight.addEventListener("click", (event) => {
+					event.preventDefault();
+					let toto = updateIndexToNextMedia(allMedia.length, index);
+					index = toto;
+					console.log(toto + "index2");
+
+					const titi = modalContent.querySelector(".imageLightbox");
+					console.log(titi);
+
+					let baliseMedia = "";
+					if (allMedia[toto].image) {
+						baliseMedia = `
+					<img src="${allMedia[toto].image}" alt="${allMedia[toto].title};">
+					`;
+					}
+					if (allMedia[toto].video) {
+						baliseMedia = ` 
+					<video controls>
+						<source src="${allMedia[toto].video}" type="video/mp4">
+						Le navigateur ne supporte pas la lecture de vidéos.
+					</video>
+					`;
+					}
+
+					titi.innerHTML = `
+					${baliseMedia}
+					<h2>${allMedia[toto].title}</h2>
+					`;
+
+					console.log(titi.innerHTML)
+				});
 			} else if (clickedElement.classList.contains("contact_button")) {
-				// appel le contenu de la focntion contactform
+				// appel le contenu de la fonction contactform
 				containerContent = contactForm(photographer.name);
 				modalContentClass = "contactForm";
 				buildModal(containerContent, modalContentClass);
@@ -127,6 +187,7 @@ class PhotographerApp{
 			function buildModal(containerContent, modalContentClass){
 				//ajout du contenu selectionné
 				modalContent.innerHTML = `
+
 				${containerContent}
 				<div class="close_modal" id="closeModalBtn">
 					<svg  width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">

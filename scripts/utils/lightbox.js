@@ -1,31 +1,27 @@
-function lightbox(media) {
-	console.log(media)
-
-	// media est le contenu html de la card sur laquelle on a clické
-	// ici on récupère le texte contenu dans le h2 qui conrrespond au titre
-	const h2Content = media.querySelector('.media-card h2.title-media').textContent;
+function lightbox(allMedia, index) {
+	// on récupère le titre de l'image dans le tableau en fonction de l'index
+	const imageTitle = allMedia[index].title;
 
 	// on va ici récupérer le src du média et conditionné une balise selon qu'on a une image ou une video
 	let src = null;
 	let baliseMedia = null;
-	if(media.querySelector('.media-card img')){
-		src = media.querySelector('.media-card img').src;
-		baliseMedia = `<img src="${src}" alt="${h2Content}">`
+	if(allMedia[index].image){
+		src = allMedia[index].image;
+		baliseMedia = `<img src="${src}" alt="${imageTitle}">`;
 	}
-	else if(media.querySelector(".media-card video")){
-		src = media.querySelector(".media-card video").src;
-		//baliseMedia = `<video src="${src}" controls></video>`
+	else if(allMedia[index].video){
+		src = allMedia[index].video;
 		baliseMedia = ` 
 		<video controls>
 			<source src="${src}" type="video/mp4">
-			Votre navigateur ne supporte pas la lecture de vidéos.
+			Le navigateur ne supporte pas la lecture de vidéos.
 		</video>
-		`
+		`;
 	}
 	else {
 		return `
 			<img src="../../assets/404.jpg" alt="">
-		`
+		`;
 	}
 
 	return `
@@ -34,7 +30,7 @@ function lightbox(media) {
 	</div>
 	<div class="imageLightbox">		
 		${baliseMedia}
-		<h2>${h2Content}</h2>
+		<h2>${imageTitle}</h2>
 	</div>
 	<div class="rightBtn">
 		<img src="../../assets/icons/chevron-right-solid.svg" alt="">
@@ -42,9 +38,26 @@ function lightbox(media) {
 	`;
 }
 
-function gestionLightbox(allMedia, index){
-	console.log(allMedia);
-	console.log(index)
+function updateIndexToPreviousMedia(tableLength, index){
+	console.log(index + " index");
 
+	if (index > 0){
+		return index - 1;
+	}
+	else if (index === 0){
+		//console.log(allMedia.length-1)
+		return tableLength - 1;
+	}
 }
-export { lightbox, gestionLightbox };
+
+function updateIndexToNextMedia(tableLength, index){
+	console.log(index + " index");
+
+	if (index < tableLength - 1){
+		return index + 1;
+	}
+	else if (index === tableLength - 1){
+		return 0;
+	}
+}
+export { lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia };
