@@ -69,7 +69,6 @@ class PhotographerApp{
 			});
 
 		const mediaCard = document.querySelectorAll(".media-card");
-
 		mediaCard.forEach((element, index) => {
 			element.addEventListener("click", () => toggleModal(element, index));
 		});
@@ -111,23 +110,22 @@ class PhotographerApp{
 				console.log(modalContent.innerHTML);
 				const btnLeft = modalContent.querySelector(".leftBtn");
 				const btnRight = modalContent.querySelector(".rightBtn");
-				const titi = modalContent.querySelector(".imageLightbox");
+				const mediaLightbox = modalContent.querySelector(".mediaLightbox");
 
 				btnLeft.addEventListener("click", (event) => {
 					event.preventDefault();
-					let toto = updateIndexToPreviousMedia(allMedia.length, index);
-					index = toto;
+					const newIndex = updateIndexToPreviousMedia(allMedia.length, index);
+					index = newIndex;
 
-					titi.innerHTML = UpdateContent(allMedia, toto);
+					mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
 				});
-
 
 				btnRight.addEventListener("click", (event) => {
 					event.preventDefault();
-					let toto = updateIndexToNextMedia(allMedia.length, index);
-					index = toto;
+					const newIndex = updateIndexToNextMedia(allMedia.length, index);
+					index = newIndex;
 
-					titi.innerHTML = UpdateContent(allMedia, toto);
+					mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
 
 				});
 			} else if (clickedElement.classList.contains("contact_button")) {

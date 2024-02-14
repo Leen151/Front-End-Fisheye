@@ -28,7 +28,7 @@ function lightbox(allMedia, index) {
 	<div class="leftBtn">
 		<img src="../../assets/icons/chevron-left-solid.svg" alt="">
 	</div>
-	<div class="imageLightbox">		
+	<div class="mediaLightbox">		
 		${baliseMedia}
 		<h2>${imageTitle}</h2>
 	</div>

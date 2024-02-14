@@ -248,8 +248,8 @@ form textarea{
     fill: #901C1C;
 }
 
-.imageLightbox img,
-.imageLightbox video{
+.mediaLightbox img,
+.mediaLightbox video{
     height: 80vh;
     width: 80vh;
     object-fit: cover;
