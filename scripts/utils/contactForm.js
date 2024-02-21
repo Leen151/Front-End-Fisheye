@@ -98,11 +98,9 @@ function sendContactForm(modalContent, photographerName) {
 			messageSent.email = email.value.trim();
 			messageSent.message = message.value.trim();
 
-			let modalSuccess = `
+			contactFormContent.innerHTML = `
 				<p class="div-success"> Votre message a été envoyé avec succès. </p>			 
 			`;
-
-			contactFormContent.innerHTML = modalSuccess;
 			contactFormContent.classList.add("succes-msg");
 
 			console.log(messageSent);

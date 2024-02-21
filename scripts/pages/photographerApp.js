@@ -1,5 +1,3 @@
-// import {lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia, UpdateContent} from "../utils/lightbox.js";
-// import {contactForm, sendContactForm} from "../utils/contactForm.js";
 import { createModal } from "../utils/modal.js";
 
 class PhotographerApp{

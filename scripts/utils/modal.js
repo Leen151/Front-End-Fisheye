@@ -1,5 +1,6 @@
-import {lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia, UpdateContent} from "../utils/lightbox.js";
-import {contactForm, sendContactForm} from "../utils/contactForm.js";
+import {lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia, UpdateContent} from "./lightbox.js";
+import {contactForm, sendContactForm} from "./contactForm.js";
+export {createModal};
 
 // Fonction pour créer la structure de la modal
 function createModal(clickedElement, index, allMedia, photographerName) {
@@ -21,7 +22,7 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 		containerContent = lightbox(allMedia, index);
 
 		modalContentClass = "lightbox";
-		buildModal(containerContent, modalContentClass);
+		buildModal(containerContent, modalContentClass, modalContent);
 
 		const btnLeft = modalContent.querySelector(".leftBtn");
 		const btnRight = modalContent.querySelector(".rightBtn");
@@ -47,23 +48,8 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 		// appel le contenu de la fonction contactform
 		containerContent = contactForm(photographerName);
 		modalContentClass = "contactForm";
-		buildModal(containerContent, modalContentClass);
+		buildModal(containerContent, modalContentClass, modalContent);
 		sendContactForm(modalContent, photographerName);
-	}
-
-	// fonction qui crée le contenu de la modale et lui donne une class css selon les paramètres
-	function buildModal(containerContent, modalContentClass){
-		//ajout du contenu selectionné
-		modalContent.innerHTML = `
-        ${containerContent}
-        <div class="close_modal" id="closeModalBtn">
-            <svg  width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white"/>
-            </svg>
-        </div>
-        `;
-		// ajout de la class selectionnée
-		modalContent.classList.add(modalContentClass);
 	}
 
 	// fermeture de la modal au clic sur la croix, hors de la modal ou sur echap
@@ -90,4 +76,17 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 	body.appendChild(modalContainer);
 }
 
-export {createModal};
+// fonction qui crée le contenu de la modale et lui donne une class css selon les paramètres
+function buildModal(containerContent, modalContentClass, modalContent){
+	//ajout du contenu selectionné
+	modalContent.innerHTML = `
+        ${containerContent}
+        <div class="close_modal" id="closeModalBtn">
+            <svg  width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white"/>
+            </svg>
+        </div>
+        `;
+	// ajout de la class selectionnée
+	modalContent.classList.add(modalContentClass);
+}
