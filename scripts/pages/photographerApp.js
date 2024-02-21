@@ -154,7 +154,6 @@ class PhotographerApp{
 			return allMedia;
 		}
 
-
 		// Génération de la galerie de média
 		function createGallery(allMedia, totalLikes){
 			// pour chaque valeur du tableau, on crée une card Media selon le template défini
@@ -176,39 +175,53 @@ class PhotographerApp{
 
 			likesBtn.forEach((element, index) => {
 				element.addEventListener("click", (event) => {
-					event.preventDefault();
-					const elementCurrent = document.getElementById(allMedia[index].id);
-					let likes = parseInt(elementCurrent.innerText, 10);
-
-					if (element.dataset.liked === "true") {
-						element.dataset.liked = "false";
-						likes -= 1;
-
-						totalLikes -= 1;
-					} else {
-						element.dataset.liked = "true";
-						likes += 1;
-						totalLikes +=1;
-					}
-
-					elementCurrent.innerText = `${likes}`;
-					// Maj du total de likes
-					let photographerInfos = document.querySelector(".photographer-infos");
-
-					// reconstruction de la 1ere section avec le bon total
-					const template = new PhotographerProfile(photographer, totalLikes);
-					photographerInfos.innerHTML = template.getPhotographerPageDOM();
-
-					//recréation de l'eventlistener
-					const contactButtons = document.querySelectorAll(".contact_button");
-					contactButtons.forEach(button => {
-						button.addEventListener("click", (event) => {
-							event.preventDefault();
-							toggleModal(button);
-						});
-					});
+					totalLikes = updateTotalLikesAndLikesByMedia(element, index, allMedia, totalLikes);
 				});
 			});
+		}
+
+		// Mise à jour des likes par média et du total
+		// 2 façons de faire sont illustrées ici
+		// soit on récupère la valeur inscrite dans la balise - cas likes par médias
+		// soit on récupère l'infos de la variable ou de l'objet créé précédemment (il faut alors retourner la valeur pour stocker sa modification) - cas totalLikes
+		function updateTotalLikesAndLikesByMedia(element, index, allMedia, totalLikes){
+			const elementCurrent = document.getElementById(allMedia[index].id);
+			let likes = parseInt(elementCurrent.innerText, 10);
+
+			if (element.dataset.liked === "true") {
+				element.dataset.liked = "false";
+				likes -= 1;
+				totalLikes -= 1;
+
+			} else {
+				element.dataset.liked = "true";
+				likes += 1;
+				totalLikes +=1;
+			}
+
+			// Maj affichage du nombre de likes de l'image
+			elementCurrent.innerText = `${likes}`;
+			// Maj du total de likes
+			const totalLikesElement = document.querySelector(".total-likes");
+			totalLikesElement.innerText = `${totalLikes}`;
+
+			return totalLikes;
+
+			// autre methode de mise à jour du total de likes mais alors le bouton contact est recréé et l'event listener ne marche plus
+			// let photographerInfos = document.querySelector(".photographer-infos");
+			//
+			// // reconstruction de la 1ere section avec le bon total
+			// const template = new PhotographerProfile(photographer, totalLikes);
+			// photographerInfos.innerHTML = template.getPhotographerPageDOM();
+			//
+			// //recréation de l'eventlistener
+			// const contactButtons = document.querySelectorAll(".contact_button");
+			// contactButtons.forEach(button => {
+			// 	button.addEventListener("click", (event) => {
+			// 		event.preventDefault();
+			// 		toggleModal(button);
+			// 	});
+			// });
 		}
 
 		// Fonction pour basculer l'état de la modal en active
