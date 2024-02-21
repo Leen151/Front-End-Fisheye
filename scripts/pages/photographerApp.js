@@ -1,5 +1,6 @@
-import {lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia, UpdateContent} from "../utils/lightbox.js";
-import {contactForm, sendContactForm} from "../utils/contactForm.js";
+// import {lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia, UpdateContent} from "../utils/lightbox.js";
+// import {contactForm, sendContactForm} from "../utils/contactForm.js";
+import { createModal } from "../utils/modal.js";
 
 class PhotographerApp{
 	constructor() {
@@ -10,8 +11,10 @@ class PhotographerApp{
 	}
 
 	async main() {
-		////// PROFIL PHOTOGRAPHE ///////
-		/////////////////////////////////
+		const body = document.querySelector("body");
+
+		////////////////////////////////////// PROFIL PHOTOGRAPHE //////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////
 		// on recherche les paramètres mis dans l'URL
 		const urlParams = new URLSearchParams(window.location.search);
 		// on recupère le paramètre "photographer" dans l'url qui correspond à l'id
@@ -31,149 +34,190 @@ class PhotographerApp{
 			totalLikes += likesData[i];
 		}
 
-		// on crée le html à afficher
+		// on crée le html
+		const sec = document.createElement("section");
+		sec.classList.add("photographer-infos");
+		this.photographerPage.appendChild(sec);
+
 		const template = new PhotographerProfile(photographer, totalLikes);
-		this.photographerPage.appendChild(template.getPhotographerPageDOM());
+		sec.innerHTML = (template.getPhotographerPageDOM());
 
 		// on récupére le bouton pour afficher le formulaire de contact
 		// on crée l'event listener
-		const contactButton = document.querySelector(".contact_button");
-		contactButton.addEventListener("click", () => toggleModal(contactButton));
-
-		/////// PARTIE GALERIE ///////
-		//////////////////////////////
-		// Récupération des données
-		const mediaData = await this.mediasApi.getMediaByPhotographerId(idUrl);
-
-		// Ici, on transforme le tableau de données en un tableau d'objet Movie grace au Model appelé par le factory
-		// le model appelé est conditionné selon que l'objet retourné à un attribut image ou vidéo
-		const allMedia = [];
-		mediaData.forEach(media => {
-			if (media.image) {
-				allMedia.push(new MediasFactory(media, "photo", photographer.name));
-			} else if (media.video) {
-				allMedia.push(new MediasFactory(media, "video", photographer.name));
-			}
+		const contactButtons = document.querySelectorAll(".contact_button");
+		contactButtons.forEach(button => {
+			button.addEventListener("click", (event) => {
+				event.preventDefault();
+				toggleModal(button);
+			});
 		});
 
-		// création de la balise section pour la galerie
+
+		/////////////////////////////// PARTIE GALERIE //////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////
+		//création de la balise section pour la galerie et du squelette html
 		const section = document.createElement("section");
 		section.classList.add("photographer-gallery");
 		this.photographerPage.appendChild(section);
 
-		// pour chaque valeur du tableau, on crée une card Media selon le template défini
-		allMedia
-			.forEach((media) => {
-				const template = new MediaCard(media);
-				section.appendChild(template.getMediaCardDOM());
-			});
+		section.innerHTML = `
+			<div class="filtersContent">
+				<div class="filters" id="filterTitle">
+					filtre par titre
+				</div>
+				<div class="filters" id="filterDate">
+					filtre par date
+				</div>
+				<div class="filters" id="filterLikes">
+					filtre par like
+				</div>
+			</div>
+			<div class="gallery">
+			</div>
+		`;
 
-		const mediaCard = document.querySelectorAll(".media-card");
-		mediaCard.forEach((element, index) => {
-			element.addEventListener("click", () => toggleModal(element, index));
+		const filterDate = document.getElementById("filterDate");
+		const filterLikes = document.getElementById("filterLikes");
+		const filterTitle = document.getElementById("filterTitle");
+		const gallery = document.querySelector(".gallery");
+
+
+		// Récupération des données
+		const mediaData = await this.mediasApi.getMediaByPhotographerId(idUrl);
+
+		// création du système de tri
+		filterTitle.addEventListener("click", () => {
+			let mediaSortedByTitle = Array.from(mediaData);
+
+			mediaSortedByTitle.sort(function (a, b) {
+				const titleA = a.title.toLowerCase();
+				const titleB = b.title.toLowerCase();
+
+				if (titleA < titleB) {
+					return -1;
+				}
+				if (titleA > titleB) {
+					return 1;
+				}
+				return 0;
+			});
+			gallery.innerHTML = "";
+
+			const allMedia = mediaConvertion(mediaSortedByTitle);
+			createGallery(allMedia, totalLikes);
 		});
 
-		/////// PARTIE MODALE ///////
-		/////////////////////////////
-		const body = document.querySelector("body");
+		filterLikes.addEventListener("click", () => {
+			let mediaSortedByLikes = Array.from(mediaData);
 
-		// Fonction pour basculer l'état de la modal (active)
-		function toggleModal(clickedElement, index) {
-			const modalContainer = document.querySelector(".modal");
-			if (!modalContainer) {
-				createModal(clickedElement, index, allMedia);
-			}
-			body.classList.toggle("modal-active");
-		}
-
-		// Fonction pour créer la structure de la modal
-		function createModal(clickedElement, index, allMedia) {
-			// Eléments de la modal
-			const modalContainer = document.createElement("div");
-			modalContainer.classList.add("modal");
-			const modalOverlay = document.createElement("div");
-			modalOverlay.classList.add("modal-overlay");
-			const modalContent = document.createElement("div");
-			modalContent.classList.add("modal-content");
-
-			// déclaration de variables pour le contenu et la class de modal-content
-			let containerContent, modalContentClass;
-
-			// création contenu et class selon le clic sur .media-card ou .contact_button
-			if (clickedElement.classList.contains("media-card")) {
-				// appel le contenu de la fonction lightbox
-				containerContent = lightbox(allMedia, index);
-
-				modalContentClass = "lightbox";
-				buildModal(containerContent, modalContentClass);
-
-				console.log(modalContent.innerHTML);
-				const btnLeft = modalContent.querySelector(".leftBtn");
-				const btnRight = modalContent.querySelector(".rightBtn");
-				const mediaLightbox = modalContent.querySelector(".mediaLightbox");
-
-				btnLeft.addEventListener("click", (event) => {
-					event.preventDefault();
-					const newIndex = updateIndexToPreviousMedia(allMedia.length, index);
-					index = newIndex;
-
-					mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
-				});
-
-				btnRight.addEventListener("click", (event) => {
-					event.preventDefault();
-					const newIndex = updateIndexToNextMedia(allMedia.length, index);
-					index = newIndex;
-
-					mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
-
-				});
-			} else if (clickedElement.classList.contains("contact_button")) {
-				// appel le contenu de la fonction contactform
-				containerContent = contactForm(photographer.name);
-				modalContentClass = "contactForm";
-				buildModal(containerContent, modalContentClass);
-				sendContactForm(modalContent, photographer.name);
-			}
-
-			// fonction qui crée le contenu de la modale et lui donne une class css selon les paramètres
-			function buildModal(containerContent, modalContentClass){
-				//ajout du contenu selectionné
-				modalContent.innerHTML = `
-
-				${containerContent}
-				<div class="close_modal" id="closeModalBtn">
-					<svg  width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white"/>
-					</svg>
-				</div>
-				`;
-				// ajout de la class selectionnée
-				modalContent.classList.add(modalContentClass);
-			}
-
-			// fermeture de la modal au clic sur la croix, hors de la modal ou sur echap
-			const closeModalBtn = modalContent.querySelector("#closeModalBtn");
-
-			closeModalBtn.addEventListener("click", () => {
-				body.classList.remove("modal-active");
-				modalContainer.remove();
+			mediaSortedByLikes.sort(function (a, b) {
+				return a.likes - b.likes;
 			});
-			modalOverlay.addEventListener("click", () => {
-				body.classList.remove("modal-active");
-				modalContainer.remove();
+			gallery.innerHTML = "";
+
+			const allMedia = mediaConvertion(mediaSortedByLikes);
+			createGallery(allMedia, totalLikes);
+		});
+
+		filterDate.addEventListener("click", () => {
+			let mediaSortedByDate = Array.from(mediaData);
+
+			mediaSortedByDate.sort(function (a, b) {
+				return a.date.localeCompare(b.date);
 			});
-			window.addEventListener("keydown", (event) =>{
-				if (event.key === "Escape" || event.key === "Esc") {
-					body.classList.remove("modal-active");
-					modalContainer.remove();
+			gallery.innerHTML = "";
+
+			const allMedia = mediaConvertion(mediaSortedByDate);
+			createGallery(allMedia, totalLikes);
+		});
+
+		// création de la galerie au premier chargement
+		const allMedia = mediaConvertion(mediaData);
+		createGallery(allMedia, totalLikes);
+
+
+		////// Partie Fonctions /////////
+		/////////////////////////////////
+
+		// Transformation des données
+		function mediaConvertion(data){
+			// Ici, on transforme le tableau de données en un tableau d'objet Movie grace au Model appelé par le factory
+			// le model appelé est conditionné selon que l'objet retourné à un attribut image ou vidéo
+			const allMedia = [];
+			data.forEach(media => {
+				if (media.image) {
+					allMedia.push(new MediasFactory(media, "photo", photographer.name));
+				} else if (media.video) {
+					allMedia.push(new MediasFactory(media, "video", photographer.name));
 				}
 			});
+			return allMedia;
+		}
 
-			// construction du DOM
-			modalContainer.appendChild(modalOverlay);
-			modalContainer.appendChild(modalContent);
-			body.appendChild(modalContainer);
+
+		// Génération de la galerie de média
+		function createGallery(allMedia, totalLikes){
+			// pour chaque valeur du tableau, on crée une card Media selon le template défini
+			allMedia
+				.forEach((media) => {
+					const template = new MediaCard(media);
+					gallery.appendChild(template.getMediaCardDOM());
+				});
+
+			//hors de la boucle car sinon l'élément du dom est écrasé à chaque itération de la boucle
+			const mediaThumbnail = document.querySelectorAll(".media-thumbnail");
+			mediaThumbnail.forEach((element, index) => {
+				element.addEventListener("click", () => toggleModal(element, index, allMedia));
+			});
+
+
+			//////////////////// partie likes ////////////////
+			const likesBtn = document.querySelectorAll(".likes");
+
+			likesBtn.forEach((element, index) => {
+				element.addEventListener("click", (event) => {
+					event.preventDefault();
+					const elementCurrent = document.getElementById(allMedia[index].id);
+					let likes = parseInt(elementCurrent.innerText, 10);
+
+					if (element.dataset.liked === "true") {
+						element.dataset.liked = "false";
+						likes -= 1;
+
+						totalLikes -= 1;
+					} else {
+						element.dataset.liked = "true";
+						likes += 1;
+						totalLikes +=1;
+					}
+
+					elementCurrent.innerText = `${likes}`;
+					// Maj du total de likes
+					let photographerInfos = document.querySelector(".photographer-infos");
+
+					// reconstruction de la 1ere section avec le bon total
+					const template = new PhotographerProfile(photographer, totalLikes);
+					photographerInfos.innerHTML = template.getPhotographerPageDOM();
+
+					//recréation de l'eventlistener
+					const contactButtons = document.querySelectorAll(".contact_button");
+					contactButtons.forEach(button => {
+						button.addEventListener("click", (event) => {
+							event.preventDefault();
+							toggleModal(button);
+						});
+					});
+				});
+			});
+		}
+
+		// Fonction pour basculer l'état de la modal en active
+		function toggleModal(clickedElement, index, allMedia) {
+			const modalContainer = document.querySelector(".modal");
+			if (!modalContainer) {
+				createModal(clickedElement, index, allMedia, photographer.name);
+			}
+			body.classList.toggle("modal-active");
 		}
 	}
 }

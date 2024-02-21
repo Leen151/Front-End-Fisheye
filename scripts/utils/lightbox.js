@@ -39,20 +39,15 @@ function lightbox(allMedia, index) {
 }
 
 function updateIndexToPreviousMedia(tableLength, index){
-	console.log(index + " index");
-
 	if (index > 0){
 		return index - 1;
 	}
 	else if (index === 0){
-		//console.log(allMedia.length-1)
 		return tableLength - 1;
 	}
 }
 
 function updateIndexToNextMedia(tableLength, index){
-	console.log(index + " index");
-
 	if (index < tableLength - 1){
 		return index + 1;
 	}
@@ -81,7 +76,6 @@ function UpdateContent(allMedia, index){
 	${baliseMedia}
 	<h2>${allMedia[index].title}</h2>
 	`;
-
-
 }
+
 export { lightbox, updateIndexToPreviousMedia, updateIndexToNextMedia, UpdateContent };

@@ -39,7 +39,7 @@
     justify-self: end;
 }
 
-.photographer-infos .price{
+.photographer-infos .more-details{
     padding: 20px 30px;
     margin: 0;
     border-radius: 5px 5px 0 0 ;
@@ -53,13 +53,24 @@
     display: flex;
     align-items: center;
 }
-.photographer-infos .price svg{
+.photographer-infos .more-details svg{
     margin-left: 4px;
     margin-right: 65px ;
 }
 
+.photographer-infos .more-details p{
+    margin: 0;
+}
+
+.filters {
+    background-color: #DB8876;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 100px 10px 100px;
+}
+
 /* Gallery */
-.photographer-gallery{
+.gallery{
     margin: 0 100px;
     display: grid;
     grid-template-columns: repeat(3, 350px);
@@ -155,6 +166,7 @@
     top: 20px;
 }
 
+/* contact form */
 .contactForm .close_modal{
     right: 35px;
     top: 33px;
@@ -237,8 +249,7 @@ form textarea{
 }
 
 
-
-
+/* lightbox */
 .lightbox{
     display: flex;
     align-items: center;
@@ -266,5 +277,3 @@ form textarea{
 .lightbox{
     background: #FAFAFA;
 }
-
-

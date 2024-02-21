@@ -1,33 +1,36 @@
 function contactForm(photographerName) {
-	return `	
-	<header class="header-form">
-		<h2>Contactez-moi <br> ${photographerName}</h2>
-	</header>
-	<form class="contactFormBody">
-		<div>
-			<label for="first" class="firstLabel">Prénom</label>
-			<input class="text-control" type="text" id="first" name="first">
-			<span class="error" id="errorFirst"></span>
-			
-			<label for="last">Nom</label>
-			<input class="text-control" type="text" id="last" name="last">
-			<span class="error" id="errorLast"></span>
-			
-			<label for="email">E-mail</label>
-			<input class="text-control" type="text" id="email" name="email">
-			<span class="error" id="errorEmail"></span>
-			
-			<label for="messageForm">Message</label> 
-			<textarea rows="4" id="messageForm"/></textarea>
-			<span class="error" id="errorMessageForm"></span>
-		</div>		
-		<button class="send_btn" id="sendBtn" type="submit">Envoyer</button>
-	</form>	
+	return `
+	<div class="contactFormContent">
+		<header class="header-form">
+			<h2>Contactez-moi <br> ${photographerName}</h2>
+		</header>
+		<form class="contactFormBody">
+			<div>
+				<label for="first" class="firstLabel">Prénom</label>
+				<input class="text-control" type="text" id="first" name="first">
+				<span class="error" id="errorFirst"></span>
+				
+				<label for="last">Nom</label>
+				<input class="text-control" type="text" id="last" name="last">
+				<span class="error" id="errorLast"></span>
+				
+				<label for="email">E-mail</label>
+				<input class="text-control" type="text" id="email" name="email">
+				<span class="error" id="errorEmail"></span>
+				
+				<label for="messageForm">Message</label> 
+				<textarea rows="4" id="messageForm"/></textarea>
+				<span class="error" id="errorMessageForm"></span>
+			</div>		
+			<button class="send_btn" id="sendBtn" type="submit">Envoyer</button>
+		</form>	
+	</div>
 	`;
 }
 
 function sendContactForm(modalContent, photographerName) {
 	// DOM elements
+	const contactFormContent = modalContent.querySelector(".contactFormContent");
 	const form = modalContent.querySelector(".contactFormBody");
 	const firstName = modalContent.querySelector("#first");
 	const lastName = modalContent.querySelector("#last");
@@ -38,8 +41,6 @@ function sendContactForm(modalContent, photographerName) {
 	const errorLast = modalContent.querySelector("#errorLast");
 	const errorEmail = modalContent.querySelector("#errorEmail");
 	const errorMessage = modalContent.querySelector("#errorMessageForm");
-
-	const sendBtn = modalContent.querySelector("#sendBtn");
 
 	//// Déclaration des constantes et des fonctions pour le traitement du formulaire /////
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -98,14 +99,11 @@ function sendContactForm(modalContent, photographerName) {
 			messageSent.message = message.value.trim();
 
 			let modalSuccess = `
-				<header>
-					<img src="../../assets/icons/close.svg" class="close_modal" id="closeModalBtn" alt="icone croix pour la fermeture de la modale"/>
-				</header>
 				<p class="div-success"> Votre message a été envoyé avec succès. </p>			 
 			`;
 
-			modalContent.innerHTML = modalSuccess;
-			modalContent.classList.add("succes-msg");
+			contactFormContent.innerHTML = modalSuccess;
+			contactFormContent.classList.add("succes-msg");
 
 			console.log(messageSent);
 		}
