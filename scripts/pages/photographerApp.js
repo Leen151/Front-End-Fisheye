@@ -59,16 +59,23 @@ class PhotographerApp{
 		this.photographerPage.appendChild(section);
 
 		section.innerHTML = `
-			<div class="filtersContent">
-				<div class="filters" id="filterTitle">
-					filtre par titre
-				</div>
-				<div class="filters" id="filterDate">
-					filtre par date
-				</div>
-				<div class="filters" id="filterLikes">
-					filtre par like
-				</div>
+			<div class="filters-content">
+<!--				<div class="filters" id="filterTitle">-->
+<!--					filtre par titre-->
+<!--				</div>-->
+<!--				<div class="filters" id="filterDate">-->
+<!--					filtre par date-->
+<!--				</div>-->
+<!--				<div class="filters" id="filterLikes">-->
+<!--					filtre par like-->
+<!--				</div>-->
+				
+				<label for="sort-btn">Trier par</label>
+				<select name="sort" id="sort-btn">
+				  <option class="filters" id="filterTitle">Popularité</option>
+				  <option class="filters" id="filterDate">Date</option>
+				  <option class="filters" id="filterLikes">Titre</option>
+				</select>
 			</div>
 			<div class="gallery">
 			</div>
