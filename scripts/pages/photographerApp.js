@@ -51,15 +51,11 @@ class PhotographerApp {
 		/////////////////////////////// PARTIE GALERIE //////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////
 		//on récupère l'element du DOM
-		// const filterDate = document.getElementById("filterDate");
-		// const filterLikes = document.getElementById("filterLikes");
-		// const filterTitle = document.getElementById("filterTitle");
 		const gallery = document.querySelector(".gallery");
+		const sortBtn = document.getElementById("sort-btn");
 
 		// Récupération des données
 		const mediaData = await this.mediasApi.getMediaByPhotographerId(idUrl);
-
-		const sortBtn = document.getElementById("sort-btn");
 
 		// gestion du tri avec un select
 		sortBtn.addEventListener("change", () => {
@@ -77,52 +73,6 @@ class PhotographerApp {
 				break;
 			}
 		});
-
-		// création du système de tri
-		// filterTitle.addEventListener("click", () => {
-		// 	let mediaSortedByTitle = Array.from(mediaData);
-		//
-		// 	mediaSortedByTitle.sort(function (a, b) {
-		// 		const titleA = a.title.toLowerCase();
-		// 		const titleB = b.title.toLowerCase();
-		//
-		// 		if (titleA < titleB) {
-		// 			return -1;
-		// 		}
-		// 		if (titleA > titleB) {
-		// 			return 1;
-		// 		}
-		// 		return 0;
-		// 	});
-		// 	gallery.innerHTML = "";
-		//
-		// 	const allMedia = mediaConvertion(mediaSortedByTitle);
-		// 	createGallery(allMedia, totalLikes);
-		// });
-		//
-		// filterLikes.addEventListener("click", () => {
-		// 	let mediaSortedByLikes = Array.from(mediaData);
-		//
-		// 	mediaSortedByLikes.sort(function (a, b) {
-		// 		return a.likes - b.likes;
-		// 	});
-		// 	gallery.innerHTML = "";
-		//
-		// 	const allMedia = mediaConvertion(mediaSortedByLikes);
-		// 	createGallery(allMedia, totalLikes);
-		// });
-		//
-		// filterDate.addEventListener("click", () => {
-		// 	let mediaSortedByDate = Array.from(mediaData);
-		//
-		// 	mediaSortedByDate.sort(function (a, b) {
-		// 		return a.date.localeCompare(b.date);
-		// 	});
-		// 	gallery.innerHTML = "";
-		//
-		// 	const allMedia = mediaConvertion(mediaSortedByDate);
-		// 	createGallery(allMedia, totalLikes);
-		// });
 
 		// création de la galerie au premier chargement
 		const allMedia = mediaConvertion(mediaData);
@@ -205,14 +155,29 @@ class PhotographerApp {
 			// ouverture de la modale
 			const mediaThumbnail = document.querySelectorAll(".media-thumbnail");
 			mediaThumbnail.forEach((element, index) => {
+				//au click
 				element.addEventListener("click", () => toggleModal(element, index, allMedia));
+				//si appui sur "enter" au focus
+				element.addEventListener("keydown", (event) =>{
+					if ((event.key === "Enter" || event.keyCode === 13)) {
+						toggleModal(element, index, allMedia);
+					}
+				});
 			});
 
 			// gestion des likes
 			const likesBtn = document.querySelectorAll(".likes");
 			likesBtn.forEach((element, index) => {
-				element.addEventListener("click", (event) => {
+				// au click
+				element.addEventListener("click", () => {
 					totalLikes = updateTotalLikesAndLikesByMedia(element, index, allMedia, totalLikes);
+				});
+				//si appui sur "enter"
+				element.addEventListener("keydown", (event) => {
+					// Vérifiez si la touche enfoncée est "Enter" (code 13) et si l'élément a le focus
+					if ((event.key === "Enter" || event.keyCode === 13) && document.activeElement === element) {
+						totalLikes = updateTotalLikesAndLikesByMedia(element, index, allMedia, totalLikes);
+					}
 				});
 			});
 		}

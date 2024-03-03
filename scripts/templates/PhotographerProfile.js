@@ -14,7 +14,7 @@ class PhotographerProfile {
 				</div>
 			</div>
 			
-			<button class="contact_button" >Contactez-moi</button>
+			<button class="contact_button" aria-label="Contact Me">Contactez-moi</button>
 
 		    <div class="img-container">
 				<img src="${this._photographer.portrait}" class="photographer-picture" alt="${this._photographer.name}" tabindex="0">
