@@ -1,23 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="css/photographer.css" rel="stylesheet" type="text/css" />
-  <meta charset="utf-8">
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-  <title>Fisheye - photographe </title>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="css/photographer.css" rel="stylesheet" type="text/css"/>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Fisheye - photographe </title>
 </head>
 <body>
 <header>
-  <a href="index.html"><img src="assets/logo.png" class="logo" alt="fisheye logo"/></a>
+    <a href="index.html">
+        <img src="assets/logo.png" class="logo" alt="lien Fisheye Home Page"/>
+    </a>
 </header>
 <main id="main" class="main">
-</main>
+    <section class="photographer-infos" aria-label="Informations"></section>
+    <section class="photographer-gallery" aria-label="Galerie">
+        <div class="filters-content">
+<!--            <div>Trier par</div>-->
+<!--            <div class="filter-btn">-->
+<!--              <div class="filter" id="filterLikes">Popularité</div>-->
+<!--              <div class="hover">-->
+<!--                <div class="filter" id="filterDate">Date</div>-->
+<!--                <div class="filter" id="filterTitle">Titre</div>-->
+<!--              </div>-->
+<!--            </div>		-->
 
+            <label for="sort-btn">Trier par</label>
+            <select name="sort" id="sort-btn">
+                <option class="filters" id="filterTitle" value="filterTitle">Popularité</option>
+                <option class="filters" id="filterDate" value="filterDate">Date</option>
+                <option class="filters" id="filterLikes" value="filterLikes">Titre</option>
+            </select>
+
+        </div>
+
+        <div class="gallery"></div>
+    </section>
+</main>
 
 
 <!-- Factory-->

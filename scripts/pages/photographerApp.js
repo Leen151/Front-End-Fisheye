@@ -1,6 +1,6 @@
-import { createModal } from "../utils/modal.js";
+import {createModal} from "../utils/modal.js";
 
-class PhotographerApp{
+class PhotographerApp {
 	constructor() {
 		this.photographerPage = document.getElementById("main");
 
@@ -27,18 +27,15 @@ class PhotographerApp{
 		// calcul du total des likes //
 		let totalLikes = 0;
 		const likesData = await this.mediasApi.getLikesByPhotographerId(idUrl);
-
 		for (let i = 0; i < likesData.length; i++) {
 			totalLikes += likesData[i];
 		}
 
-		// on crée le html
-		const sec = document.createElement("section");
-		sec.classList.add("photographer-infos");
-		this.photographerPage.appendChild(sec);
+		//on récupère l'element du DOM
+		const photographerInfosSection = document.querySelector(".photographer-infos");
 
 		const template = new PhotographerProfile(photographer, totalLikes);
-		sec.innerHTML = (template.getPhotographerPageDOM());
+		photographerInfosSection.innerHTML = (template.getPhotographerPageDOM());
 
 		// on récupére le bouton pour afficher le formulaire de contact
 		// on crée l'event listener
@@ -53,45 +50,101 @@ class PhotographerApp{
 
 		/////////////////////////////// PARTIE GALERIE //////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////
-		//création de la balise section pour la galerie et du squelette html
-		const section = document.createElement("section");
-		section.classList.add("photographer-gallery");
-		this.photographerPage.appendChild(section);
-
-		section.innerHTML = `
-			<div class="filters-content">
-<!--				<div class="filters" id="filterTitle">-->
-<!--					filtre par titre-->
-<!--				</div>-->
-<!--				<div class="filters" id="filterDate">-->
-<!--					filtre par date-->
-<!--				</div>-->
-<!--				<div class="filters" id="filterLikes">-->
-<!--					filtre par like-->
-<!--				</div>-->
-				
-				<label for="sort-btn">Trier par</label>
-				<select name="sort" id="sort-btn">
-				  <option class="filters" id="filterTitle">Popularité</option>
-				  <option class="filters" id="filterDate">Date</option>
-				  <option class="filters" id="filterLikes">Titre</option>
-				</select>
-			</div>
-			<div class="gallery">
-			</div>
-		`;
-
-		const filterDate = document.getElementById("filterDate");
-		const filterLikes = document.getElementById("filterLikes");
-		const filterTitle = document.getElementById("filterTitle");
+		//on récupère l'element du DOM
+		// const filterDate = document.getElementById("filterDate");
+		// const filterLikes = document.getElementById("filterLikes");
+		// const filterTitle = document.getElementById("filterTitle");
 		const gallery = document.querySelector(".gallery");
-
 
 		// Récupération des données
 		const mediaData = await this.mediasApi.getMediaByPhotographerId(idUrl);
 
+		const sortBtn = document.getElementById("sort-btn");
+
+		// gestion du tri avec un select
+		sortBtn.addEventListener("change", () => {
+			const selectedOption = sortBtn.value;
+
+			switch (selectedOption) {
+			case "filterTitle":
+				sortByTitle();
+				break;
+			case "filterDate":
+				sortByDate();
+				break;
+			case "filterLikes":
+				sortByLikes();
+				break;
+			}
+		});
+
 		// création du système de tri
-		filterTitle.addEventListener("click", () => {
+		// filterTitle.addEventListener("click", () => {
+		// 	let mediaSortedByTitle = Array.from(mediaData);
+		//
+		// 	mediaSortedByTitle.sort(function (a, b) {
+		// 		const titleA = a.title.toLowerCase();
+		// 		const titleB = b.title.toLowerCase();
+		//
+		// 		if (titleA < titleB) {
+		// 			return -1;
+		// 		}
+		// 		if (titleA > titleB) {
+		// 			return 1;
+		// 		}
+		// 		return 0;
+		// 	});
+		// 	gallery.innerHTML = "";
+		//
+		// 	const allMedia = mediaConvertion(mediaSortedByTitle);
+		// 	createGallery(allMedia, totalLikes);
+		// });
+		//
+		// filterLikes.addEventListener("click", () => {
+		// 	let mediaSortedByLikes = Array.from(mediaData);
+		//
+		// 	mediaSortedByLikes.sort(function (a, b) {
+		// 		return a.likes - b.likes;
+		// 	});
+		// 	gallery.innerHTML = "";
+		//
+		// 	const allMedia = mediaConvertion(mediaSortedByLikes);
+		// 	createGallery(allMedia, totalLikes);
+		// });
+		//
+		// filterDate.addEventListener("click", () => {
+		// 	let mediaSortedByDate = Array.from(mediaData);
+		//
+		// 	mediaSortedByDate.sort(function (a, b) {
+		// 		return a.date.localeCompare(b.date);
+		// 	});
+		// 	gallery.innerHTML = "";
+		//
+		// 	const allMedia = mediaConvertion(mediaSortedByDate);
+		// 	createGallery(allMedia, totalLikes);
+		// });
+
+		// création de la galerie au premier chargement
+		const allMedia = mediaConvertion(mediaData);
+		createGallery(allMedia, totalLikes);
+
+
+		////// Partie Fonctions /////////
+		/////////////////////////////////
+		// fonctions de tri
+		function sortByDate() {
+			let mediaSortedByLikes = Array.from(mediaData);
+
+			mediaSortedByLikes.sort(function (a, b) {
+				return a.likes - b.likes;
+			});
+			gallery.innerHTML = "";
+
+			const allMedia = mediaConvertion(mediaSortedByLikes);
+			createGallery(allMedia, totalLikes);
+		}
+
+		function sortByTitle() {
 			let mediaSortedByTitle = Array.from(mediaData);
 
 			mediaSortedByTitle.sort(function (a, b) {
@@ -110,21 +163,9 @@ class PhotographerApp{
 
 			const allMedia = mediaConvertion(mediaSortedByTitle);
 			createGallery(allMedia, totalLikes);
-		});
+		}
 
-		filterLikes.addEventListener("click", () => {
-			let mediaSortedByLikes = Array.from(mediaData);
-
-			mediaSortedByLikes.sort(function (a, b) {
-				return a.likes - b.likes;
-			});
-			gallery.innerHTML = "";
-
-			const allMedia = mediaConvertion(mediaSortedByLikes);
-			createGallery(allMedia, totalLikes);
-		});
-
-		filterDate.addEventListener("click", () => {
+		function sortByLikes() {
 			let mediaSortedByDate = Array.from(mediaData);
 
 			mediaSortedByDate.sort(function (a, b) {
@@ -134,19 +175,12 @@ class PhotographerApp{
 
 			const allMedia = mediaConvertion(mediaSortedByDate);
 			createGallery(allMedia, totalLikes);
-		});
-
-		// création de la galerie au premier chargement
-		const allMedia = mediaConvertion(mediaData);
-		createGallery(allMedia, totalLikes);
+		}
 
 
-		////// Partie Fonctions /////////
-		/////////////////////////////////
-
-		// Transformation des données
-		function mediaConvertion(data){
-			// Ici, on transforme le tableau de données en un tableau d'objet Movie grace au Model appelé par le factory
+		// Transformation des données en objet selon nos models
+		function mediaConvertion(data) {
+			// Ici, on transforme le tableau de données en un tableau d'objet Photo ou Video grace au Model appelé par le factory
 			// le model appelé est conditionné selon que l'objet retourné à un attribut image ou vidéo
 			const allMedia = [];
 			data.forEach(media => {
@@ -160,7 +194,7 @@ class PhotographerApp{
 		}
 
 		// Génération de la galerie de média
-		function createGallery(allMedia, totalLikes){
+		function createGallery(allMedia, totalLikes) {
 			// pour chaque valeur du tableau, on crée une card Media selon le template défini
 			allMedia
 				.forEach((media) => {
@@ -168,16 +202,14 @@ class PhotographerApp{
 					gallery.appendChild(template.getMediaCardDOM());
 				});
 
-			//hors de la boucle car sinon l'élément du dom est écrasé à chaque itération de la boucle
+			// ouverture de la modale
 			const mediaThumbnail = document.querySelectorAll(".media-thumbnail");
 			mediaThumbnail.forEach((element, index) => {
 				element.addEventListener("click", () => toggleModal(element, index, allMedia));
 			});
 
-
-			//////////////////// partie likes ////////////////
+			// gestion des likes
 			const likesBtn = document.querySelectorAll(".likes");
-
 			likesBtn.forEach((element, index) => {
 				element.addEventListener("click", (event) => {
 					totalLikes = updateTotalLikesAndLikesByMedia(element, index, allMedia, totalLikes);
@@ -188,8 +220,8 @@ class PhotographerApp{
 		// Mise à jour des likes par média et du total
 		// 2 façons de faire sont illustrées ici
 		// soit on récupère la valeur inscrite dans la balise - cas likes par médias
-		// soit on récupère l'infos de la variable ou de l'objet créé précédemment (il faut alors retourner la valeur pour stocker sa modification) - cas totalLikes
-		function updateTotalLikesAndLikesByMedia(element, index, allMedia, totalLikes){
+		// soit on récupère l'infos de la variable créée précédemment qui est passée en paramètre (il faut alors retourner la valeur pour "enregistrer" sa modification) - cas totalLikes
+		function updateTotalLikesAndLikesByMedia(element, index, allMedia, totalLikes) {
 			const elementCurrent = document.getElementById(allMedia[index].id);
 			let likes = parseInt(elementCurrent.innerText, 10);
 
@@ -197,11 +229,10 @@ class PhotographerApp{
 				element.dataset.liked = "false";
 				likes -= 1;
 				totalLikes -= 1;
-
 			} else {
 				element.dataset.liked = "true";
 				likes += 1;
-				totalLikes +=1;
+				totalLikes += 1;
 			}
 
 			// Maj affichage du nombre de likes de l'image
