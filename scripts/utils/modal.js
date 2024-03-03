@@ -35,6 +35,20 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 
 			mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
 		});
+		btnLeft.addEventListener("keydown", (event) =>{
+			if ((event.key === "Enter" || event.keyCode === 13)) {
+				event.preventDefault();
+				const newIndex = updateIndexToPreviousMedia(allMedia.length, index);
+				index = newIndex;
+
+				mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
+			}
+		});
+		document.addEventListener("keydown", function (event) {
+			if (event.code === "ArrowLeft") {
+				btnLeft.click();
+			}
+		});
 
 		btnRight.addEventListener("click", (event) => {
 			event.preventDefault();
@@ -44,6 +58,21 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 			mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
 
 		});
+		btnRight.addEventListener("keydown", (event) =>{
+			if ((event.key === "Enter" || event.keyCode === 13)) {
+				event.preventDefault();
+				const newIndex = updateIndexToNextMedia(allMedia.length, index);
+				index = newIndex;
+
+				mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
+			}
+		});
+		document.addEventListener("keydown", function (event) {
+			if (event.code === "ArrowRight") {
+				btnRight.click();
+			}
+		});
+
 	} else if (clickedElement.classList.contains("contact_button")) {
 		// appel le contenu de la fonction contactform
 		containerContent = contactForm(photographerName);
@@ -69,6 +98,14 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 			modalContainer.remove();
 		}
 	});
+	//si appui sur "enter" avec focus sur la croix
+	closeModalBtn.addEventListener("keydown", (event) => {
+		// Vérifiez si la touche enfoncée est "Enter" (code 13) et si l'élément a le focus
+		if (event.key === "Enter") {
+			body.classList.toggle("modal-active");
+			modalContainer.remove();
+		}
+	});
 
 	// construction du DOM
 	modalContainer.appendChild(modalOverlay);
@@ -80,12 +117,12 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 function buildModal(containerContent, modalContentClass, modalContent){
 	//ajout du contenu selectionné
 	modalContent.innerHTML = `
-        ${containerContent}
-        <div class="close_modal" id="closeModalBtn">
+        <div class="close_modal" id="closeModalBtn" tabindex="0">
             <svg  width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white"/>
             </svg>
         </div>
+        ${containerContent}
         `;
 	// ajout de la class selectionnée
 	modalContent.classList.add(modalContentClass);

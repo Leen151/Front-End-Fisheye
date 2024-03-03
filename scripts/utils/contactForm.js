@@ -2,7 +2,7 @@ function contactForm(photographerName) {
 	return `
 	<div class="contactFormContent">
 		<header class="header-form">
-			<h2>Contactez-moi <br> ${photographerName}</h2>
+			<h2 tabindex="0">Contactez-moi <br> ${photographerName}</h2>
 		</header>
 		<form class="contactFormBody">
 			<div>
