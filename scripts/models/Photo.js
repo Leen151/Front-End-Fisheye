@@ -7,7 +7,7 @@ class Photo {
 		this._likes = photo.likes;
 		this._date = photo.date;
 		this._price = photo.price;
-		this._photographerName = photographerName;
+		this._photographerMediaSrc = photographerName.replace(" ", "_");
 	}
 
 	get id() {
@@ -23,24 +23,7 @@ class Photo {
 	}
 
 	get image() {
-		// switch (this._photographerId){
-		// 	case 243:
-		// 		return `/assets/medias/Mimi Keel/${this._image}`;
-		// 	case 930:
-		// 		return `/assets/medias/Ellie-Rose Wilkens/${this._image}`;
-		// 	case 82:
-		// 		return `/assets/medias/Tracy Galindo/${this._image}`;
-		// 	case 527:
-		// 		return `/assets/medias/Nabeel Bradford/${this._image}`;
-		// 	case 925:
-		// 		return `/assets/medias/Rhode Dubois/${this._image}`;
-		// 	case 195:
-		// 		return `/assets/medias/Marcel Nikolic/${this._image}`;
-		// 	default:
-		// 	// par défaut si aucun cas ne correspond
-		// 	return `/assets/404.jpg`;
-		//  }
-		return `/assets/medias/${this._photographerName}/${this._image}`;
+		return `/assets/medias/${this._photographerMediaSrc}/${this._image}`;
 	}
 
 	get likes() {
