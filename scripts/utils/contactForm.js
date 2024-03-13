@@ -1,30 +1,38 @@
-function contactForm(photographerName) {
+async function contactForm(photographerName) {
 	return `
-	<div class="contactFormContent" aria-hidden="false">
+    <div class="modal-overlay"></div>
+	<div class="contactForm-content" role="dialog" aria-hidden="false" tabindex="-1">
 		<header class="header-form">
 			<h2 id="title-contactform-modal">Contactez-moi <br> ${photographerName}</h2>
 		</header>
 		<form class="contactFormBody">
 			<div>
 				<label for="first" id="first-label">Prénom</label>
-				<input class="text-control" type="text" id="first" name="first" aria-labelledby="first-label" required>
+				<input class="text-control" type="text" id="first" name="first" aria-labelledby="first-label">
 				<span class="error" id="errorFirst"></span>
 				
 				<label for="last" id="last-label">Nom</label>
-				<input class="text-control" type="text" id="last" name="last" aria-labelledby="last-label" required>
+				<input class="text-control" type="text" id="last" name="last" aria-labelledby="last-label">
 				<span class="error" id="errorLast"></span>
 				
 				<label for="email" id="email-label">E-mail</label>
-				<input class="text-control" type="text" id="email" name="email" aria-labelledby="email-label" required>
+				<input class="text-control" type="text" id="email" name="email" aria-labelledby="email-label">
 				<span class="error" id="errorEmail"></span>
 				
 				<label for="messageForm" id="messge-label">Message</label> 
-				<textarea rows="4" id="messageForm" aria-labelledby="messge-label" required></textarea>
+				<textarea rows="4" id="messageForm" aria-labelledby="messge-label"></textarea>
 				<span class="error" id="errorMessageForm"></span>
 			</div>		
 			<button class="send_btn" id="sendBtn" type="submit">Envoyer</button>
 		</form>	
+		<button class="close_modal" id="closeModalBtn">
+			<svg  width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white"/>
+			</svg>
+		</button>
 	</div>
+
+    	
 	`;
 }
 

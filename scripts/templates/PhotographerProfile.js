@@ -4,7 +4,7 @@ class PhotographerProfile {
 		this._totalLikes = totalLikes;
 	}
 
-	getPhotographerPageDOM() {
+	async getPhotographerPageDOM() {
 		return `
 			<div class="infos_text">
 				<h1 class="photographer-name" aria-label="nom" >${this._photographer.name}</h1>      	   

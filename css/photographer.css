@@ -152,10 +152,8 @@
 }
 
 /* Modal */
-.modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.modal-contactForm {
     position: fixed;
     top: 0;
     left: 0;
@@ -174,25 +172,35 @@
     z-index: 7;
 }
 
-.modal-content {
+.contactForm-content {
+    top: 50%;
+    transform: translate(0, -50%);
     padding: 20px;
     z-index: 9;
     position: relative;
+    margin: auto;
 }
 
-.modal-content .close_modal {
+ .close_modal {
     position: absolute;
     right: 20px;
     top: 20px;
+    background: none;
+    border: none;
+}
+
+
+.modal-contactForm, .modal-lightbox{
+    display: none;
 }
 
 /* contact form */
-.contactForm .close_modal {
+.contactForm-content .close_modal {
     right: 35px;
     top: 33px;
 }
 
-.contactForm {
+.contactForm-content {
     border-radius: 5px;
     background-color: #DB8876;
     width: 650px;
@@ -201,7 +209,7 @@
     margin: auto;
 }
 
-.contactForm header {
+.contactForm-content header {
     margin: 0;
     height: auto;
     display: flex;
@@ -210,7 +218,7 @@
     width: 100%;
 }
 
-.contactForm header h2 {
+.contactForm-content header h2 {
     margin: 0;
     font-size: 62px;
     font-weight: normal;
@@ -218,7 +226,7 @@
     padding-bottom: 20px;
 }
 
-.contactForm header img {
+.contactForm-content header img {
     margin-top: 10px;
     cursor: pointer;
 }
@@ -243,7 +251,6 @@ form div {
     margin-bottom: 26px;
 }
 
-
 form input,
 form textarea {
     width: 629px;
@@ -253,7 +260,7 @@ form textarea {
     padding: 15px 10px;
 }
 
-.contactForm .error {
+.contactForm-content .error {
     color: #901C1C;
 }
 
@@ -297,3 +304,6 @@ form textarea {
 .lightbox {
     background: #FAFAFA;
 }
+
+/*******************************************************/
+

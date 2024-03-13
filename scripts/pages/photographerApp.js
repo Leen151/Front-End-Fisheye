@@ -1,4 +1,5 @@
-import {createModal} from "../utils/modal.js";
+//import {createModal} from "../utils/modal.js";
+import {contactForm, sendContactForm} from "../utils/contactForm.js";
 
 class PhotographerApp {
 	constructor() {
@@ -35,17 +36,25 @@ class PhotographerApp {
 		const photographerInfosSection = document.querySelector(".photographer-infos");
 
 		const template = new PhotographerProfile(photographer, totalLikes);
-		photographerInfosSection.innerHTML = (template.getPhotographerPageDOM());
+		photographerInfosSection.innerHTML = await template.getPhotographerPageDOM();
+
 
 		// on récupére le bouton pour afficher le formulaire de contact
 		// on crée l'event listener
-		const contactButtons = document.querySelectorAll(".contact_button");
-		contactButtons.forEach(button => {
-			button.addEventListener("click", (event) => {
-				event.preventDefault();
-				toggleModal(button);
-			});
+		const contactButtons = document.querySelector(".contact_button");
+		const contactFormModal = document.querySelector(".modal-contactForm");
+		const contactFormModalContent = await contactForm(photographer.name);
+		contactButtons.addEventListener("click", () => {
+			contactFormModal.innerHTML = contactFormModalContent;
+			this.openModal(contactFormModal);
+
+			const firstField = document.querySelector("#first");
+			firstField.focus();
+
+			sendContactForm(contactFormModal, photographer.name);
+			this.closeModale(contactFormModal);
 		});
+
 
 
 		/////////////////////////////// PARTIE GALERIE //////////////////////////////////////
@@ -77,6 +86,11 @@ class PhotographerApp {
 		// création de la galerie au premier chargement
 		const allMedia = mediaConvertion(mediaData);
 		createGallery(allMedia, totalLikes);
+
+		////////////////////////////////////////////////////
+		//this.closeModale(contactFormModal);
+
+
 
 
 		////// Partie Fonctions /////////
@@ -128,7 +142,7 @@ class PhotographerApp {
 		}
 
 
-		// Transformation des données en objet selon nos models
+		// Transformation des données en objet selon les models de données models
 		function mediaConvertion(data) {
 			// Ici, on transforme le tableau de données en un tableau d'objet Photo ou Video grace au Model appelé par le factory
 			// le model appelé est conditionné selon que l'objet retourné à un attribut image ou vidéo
@@ -231,12 +245,55 @@ class PhotographerApp {
 			if (!modalContainer) {
 				createModal(clickedElement, index, allMedia, photographer.name);
 			}
-			body.classList.toggle("modal-active");
-			//const baliseMain = document.querySelector("main");
-			//baliseMain.setAttribute("aria-hidden", "true");
+			const baliseMain = document.querySelector("main");
+			baliseMain.setAttribute("aria-hidden", "true");
 		}
 	}
+
+	///////////////////////
+	openModal(divContainer){
+		console.log("modal ouverte");
+		divContainer.style.display = "block";
+		const baliseMain = document.querySelector("main");
+		baliseMain.setAttribute("aria-hidden", "true");
+	}
+
+	closeModale(modal){
+		const closeModalBtn = document.querySelectorAll("#closeModalBtn");
+		const baliseMain = document.querySelector("main");
+		const modalOverlay = document.querySelector(".modal-overlay");
+		console.log(modalOverlay);
+
+		closeModalBtn.forEach((button) => {
+			button.addEventListener("click", () => {
+				modal.style.display = "none";
+				baliseMain.setAttribute("aria-hidden", "false");
+			});
+		});
+		modalOverlay.addEventListener("click", () => {
+			// modalContainer.remove();
+			// baliseMain.setAttribute("aria-hidden", "false");
+			modal.style.display = "none";
+			baliseMain.setAttribute("aria-hidden", "false");
+		});
+		window.addEventListener("keydown", (event) =>{
+			if (event.key === "Escape" || event.key === "Esc") {
+				modal.style.display = "none";
+			}
+			baliseMain.setAttribute("aria-hidden", "false");
+		});
+	}
+
+	async createContactFormModal(){
+
+	}
+	async createLightBoxModal(){
+
+	}
+
 }
 
 const photographerApp = new PhotographerApp();
 photographerApp.main();
+
+

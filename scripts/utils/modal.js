@@ -71,7 +71,7 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 	}
 
 	// fermeture de la modal au clic sur la croix, hors de la modal ou sur echap
-	const closeModalBtn = modalContent.querySelector("#closeModalBtn");
+	const closeModalBtn = modalContent.querySelectorAll("#closeModalBtn");
 	const baliseMain = document.querySelector("main");
 
 	closeModalBtn.addEventListener("click", () => {
@@ -107,11 +107,11 @@ function buildModal(containerContent, modalContentClass, modalContent){
 	//ajout du contenu selectionné
 	modalContent.innerHTML = `
        ${containerContent}
-        <div class="close_modal" id="closeModalBtn" tabindex="4">
+        <button class="close_modal" id="closeModalBtn">
             <svg  width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white"/>
             </svg>
-        </div> 
+        </button> 
         `;
 	// ajout de la class selectionnée
 	modalContent.classList.add(modalContentClass);
