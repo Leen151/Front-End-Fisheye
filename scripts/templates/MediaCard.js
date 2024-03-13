@@ -9,17 +9,17 @@ class MediaCard {
 
 		let  baliseMedia = null;
 		if (this._media.image) {
-			baliseMedia = `<img src="${this._media.image}" alt="open lightbox" class="media-thumbnail" aria-label="open lightbox" tabindex="0">`;
+			baliseMedia = `<img src="${this._media.image}" alt="${this._media.title} - open lightbox" class="media-thumbnail">`;
 		}else if (this._media.video) {
-			baliseMedia = `<video src="${this._media.video}" class="media-thumbnail" aria-label="open lightbox"></video>`;
+			baliseMedia = `<video src="${this._media.video}" class="media-thumbnail" aria-label="${this._media.title} - open lightbox"></video>`;
 		}
 
 		if(baliseMedia){
 			article.innerHTML = `
 			${baliseMedia}
 			<div class="media-infos">
-				<h2 class="title-media" aria-label="titre" tabindex="0">${this._media.title}</h2>
-				<div class="likes" data-liked = "false" tabindex="0" role="button" aria-label="bouton like">
+				<h2 class="title-media" >${this._media.title}</h2>
+				<div class="likes" data-liked = "false" role="button" aria-label="bouton like">
 					<p class="likes-number" id="${this._media.id}" aria-label="nombre de likes">
 						${this._media.likes}
 					</p>

@@ -232,6 +232,8 @@ class PhotographerApp {
 				createModal(clickedElement, index, allMedia, photographer.name);
 			}
 			body.classList.toggle("modal-active");
+			//const baliseMain = document.querySelector("main");
+			//baliseMain.setAttribute("aria-hidden", "true");
 		}
 	}
 }

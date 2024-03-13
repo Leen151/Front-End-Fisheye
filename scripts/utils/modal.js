@@ -12,6 +12,8 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 	modalOverlay.classList.add("modal-overlay");
 	const modalContent = document.createElement("div");
 	modalContent.classList.add("modal-content");
+	modalContent.setAttribute("role", "dialog");
+
 
 	// déclaration de variables pour le contenu et la class de modal-content
 	let containerContent, modalContentClass;
@@ -35,15 +37,6 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 
 			mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
 		});
-		btnLeft.addEventListener("keydown", (event) =>{
-			if ((event.key === "Enter" || event.keyCode === 13)) {
-				event.preventDefault();
-				const newIndex = updateIndexToPreviousMedia(allMedia.length, index);
-				index = newIndex;
-
-				mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
-			}
-		});
 		document.addEventListener("keydown", function (event) {
 			if (event.code === "ArrowLeft") {
 				btnLeft.click();
@@ -58,15 +51,6 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 			mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
 
 		});
-		btnRight.addEventListener("keydown", (event) =>{
-			if ((event.key === "Enter" || event.keyCode === 13)) {
-				event.preventDefault();
-				const newIndex = updateIndexToNextMedia(allMedia.length, index);
-				index = newIndex;
-
-				mediaLightbox.innerHTML = UpdateContent(allMedia, newIndex);
-			}
-		});
 		document.addEventListener("keydown", function (event) {
 			if (event.code === "ArrowRight") {
 				btnRight.click();
@@ -79,50 +63,55 @@ function createModal(clickedElement, index, allMedia, photographerName) {
 		modalContentClass = "contactForm";
 		buildModal(containerContent, modalContentClass, modalContent);
 		sendContactForm(modalContent, photographerName);
+
+		// const blabla = modalContent.querySelector("#first");
+		//
+		// blabla.focus({preventScroll:true});
+
 	}
 
 	// fermeture de la modal au clic sur la croix, hors de la modal ou sur echap
 	const closeModalBtn = modalContent.querySelector("#closeModalBtn");
+	const baliseMain = document.querySelector("main");
 
 	closeModalBtn.addEventListener("click", () => {
 		body.classList.toggle("modal-active");
 		modalContainer.remove();
+		//baliseMain.setAttribute("aria-hidden", "false");
 	});
 	modalOverlay.addEventListener("click", () => {
 		body.classList.toggle("modal-active");
 		modalContainer.remove();
+		//baliseMain.setAttribute("aria-hidden", "false");
 	});
 	window.addEventListener("keydown", (event) =>{
 		if (event.key === "Escape" || event.key === "Esc") {
 			body.classList.toggle("modal-active");
 			modalContainer.remove();
 		}
-	});
-	//si appui sur "enter" avec focus sur la croix
-	closeModalBtn.addEventListener("keydown", (event) => {
-		// Vérifiez si la touche enfoncée est "Enter" (code 13) et si l'élément a le focus
-		if (event.key === "Enter") {
-			body.classList.toggle("modal-active");
-			modalContainer.remove();
-		}
+		//baliseMain.setAttribute("aria-hidden", "false");
 	});
 
 	// construction du DOM
+	const main = document.querySelector("main");
+
+
 	modalContainer.appendChild(modalOverlay);
 	modalContainer.appendChild(modalContent);
-	body.appendChild(modalContainer);
+	// body.appendChild(modalContainer);
+	body.insertBefore(modalContainer, main);
 }
 
 // fonction qui crée le contenu de la modale et lui donne une class css selon les paramètres
 function buildModal(containerContent, modalContentClass, modalContent){
 	//ajout du contenu selectionné
 	modalContent.innerHTML = `
-        <div class="close_modal" id="closeModalBtn" tabindex="0">
+       ${containerContent}
+        <div class="close_modal" id="closeModalBtn" tabindex="4">
             <svg  width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white"/>
             </svg>
-        </div>
-        ${containerContent}
+        </div> 
         `;
 	// ajout de la class selectionnée
 	modalContent.classList.add(modalContentClass);

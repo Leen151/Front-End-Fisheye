@@ -1,25 +1,25 @@
 function contactForm(photographerName) {
 	return `
-	<div class="contactFormContent">
+	<div class="contactFormContent" aria-hidden="false">
 		<header class="header-form">
-			<h2 tabindex="0">Contactez-moi <br> ${photographerName}</h2>
+			<h2 id="title-contactform-modal">Contactez-moi <br> ${photographerName}</h2>
 		</header>
 		<form class="contactFormBody">
 			<div>
-				<label for="first" class="firstLabel">Prénom</label>
-				<input class="text-control" type="text" id="first" name="first">
+				<label for="first" id="first-label">Prénom</label>
+				<input class="text-control" type="text" id="first" name="first" aria-labelledby="first-label" required>
 				<span class="error" id="errorFirst"></span>
 				
-				<label for="last">Nom</label>
-				<input class="text-control" type="text" id="last" name="last">
+				<label for="last" id="last-label">Nom</label>
+				<input class="text-control" type="text" id="last" name="last" aria-labelledby="last-label" required>
 				<span class="error" id="errorLast"></span>
 				
-				<label for="email">E-mail</label>
-				<input class="text-control" type="text" id="email" name="email">
+				<label for="email" id="email-label">E-mail</label>
+				<input class="text-control" type="text" id="email" name="email" aria-labelledby="email-label" required>
 				<span class="error" id="errorEmail"></span>
 				
-				<label for="messageForm">Message</label> 
-				<textarea rows="4" id="messageForm"/></textarea>
+				<label for="messageForm" id="messge-label">Message</label> 
+				<textarea rows="4" id="messageForm" aria-labelledby="messge-label" required></textarea>
 				<span class="error" id="errorMessageForm"></span>
 			</div>		
 			<button class="send_btn" id="sendBtn" type="submit">Envoyer</button>
