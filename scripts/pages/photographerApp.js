@@ -14,18 +14,16 @@ class PhotographerApp {
 
 		////////////////////////////////////// PROFIL PHOTOGRAPHE //////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////////
-		// on recherche les paramètres mis dans l'URL
+		// on recherche le paramètre "photographer" dans l'url qui correspond à l'id
+		// et on le parse en int afin de pouvoir faire la recherche sur les ids des données json
 		const urlParams = new URLSearchParams(window.location.search);
-		// on recupère le paramètre "photographer" dans l'url qui correspond à l'id
-		// et on le parse en int afin de pouvoir faire la comparaison avec les ids des données json
 		const idUrl = parseInt(urlParams.get("photographer"));
 
-		// on récupère les données du photographe
+		// on récupère les données du photographe puis on transforme les données en objet "Photographer"
 		const photographerData = await this.photographersApi.getPhotographerById(idUrl);
-		// on transforme les données en objet "Photographer"
 		const photographer = new Photographer(photographerData);
 
-		// calcul du total des likes //
+		// calcul du total des likes
 		let totalLikes = 0;
 		const likesData = await this.mediasApi.getLikesByPhotographerId(idUrl);
 		for (let i = 0; i < likesData.length; i++) {
@@ -87,20 +85,14 @@ class PhotographerApp {
 		const allMedia = mediaConvertion(mediaData);
 		createGallery(allMedia, totalLikes);
 
-		////////////////////////////////////////////////////
-		//this.closeModale(contactFormModal);
-
-
-
 
 		////// Partie Fonctions /////////
-		/////////////////////////////////
 		// fonctions de tri
-		function sortByDate() {
+		function sortByLikes() {
 			let mediaSortedByLikes = Array.from(mediaData);
 
 			mediaSortedByLikes.sort(function (a, b) {
-				return a.likes - b.likes;
+				return b.likes - a.likes;
 			});
 			gallery.innerHTML = "";
 
@@ -129,7 +121,7 @@ class PhotographerApp {
 			createGallery(allMedia, totalLikes);
 		}
 
-		function sortByLikes() {
+		function sortByDate() {
 			let mediaSortedByDate = Array.from(mediaData);
 
 			mediaSortedByDate.sort(function (a, b) {
@@ -142,7 +134,7 @@ class PhotographerApp {
 		}
 
 
-		// Transformation des données en objet selon les models de données models
+		// Transformation des données en objet selon les models de données
 		function mediaConvertion(data) {
 			// Ici, on transforme le tableau de données en un tableau d'objet Photo ou Video grace au Model appelé par le factory
 			// le model appelé est conditionné selon que l'objet retourné à un attribut image ou vidéo
@@ -222,7 +214,7 @@ class PhotographerApp {
 
 			return totalLikes;
 
-			// autre methode de mise à jour du total de likes mais alors le bouton contact est recréé et l'event listener ne marche plus
+			// autre methode de mise à jour du total de likes
 			// let photographerInfos = document.querySelector(".photographer-infos");
 			//
 			// // reconstruction de la 1ere section avec le bon total
