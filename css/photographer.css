@@ -96,6 +96,11 @@
     row-gap: 20px;
 }
 
+/* .photographer-gallery a{
+    display: inline-block;
+    height: 300px;
+    width: 350px;
+} */
 .photographer-gallery img,
 .photographer-gallery video {
     height: 300px;
@@ -152,8 +157,10 @@
 }
 
 /* Modal */
-
-.modal-contactForm {
+.modal-contactForm, .modal-lightbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
@@ -172,16 +179,14 @@
     z-index: 7;
 }
 
-.contactForm-content {
-    top: 50%;
-    transform: translate(0, -50%);
+.contactForm-content, .lightbox-content {
     padding: 20px;
     z-index: 9;
     position: relative;
     margin: auto;
 }
 
- .close_modal {
+.close_modal {
     position: absolute;
     right: 20px;
     top: 20px;
@@ -189,10 +194,17 @@
     border: none;
 }
 
+.rightBtn, .leftBtn{
+    background: none;
+    border: none;
+}
+
 
 .modal-contactForm, .modal-lightbox{
-    display: none;
+    /* display: none; */
+    visibility: hidden;
 }
+
 
 /* contact form */
 .contactForm-content .close_modal {
@@ -277,12 +289,12 @@ form textarea {
 
 
 /* lightbox */
-.lightbox {
+.lightbox-content {
     display: flex;
     align-items: center;
 }
 
-.lightbox svg path {
+.lightbox-content svg path {
     fill: #901C1C;
 }
 
@@ -294,16 +306,13 @@ form textarea {
     padding: 0 20px;
 }
 
-.lightbox h2 {
+.lightbox-content h2 {
     padding-left: 20px;
     margin: 5px 0 0 0;
     color: #901C1C;
     font-weight: 400;
 }
 
-.lightbox {
+.lightbox-content {
     background: #FAFAFA;
 }
-
-/*******************************************************/
-

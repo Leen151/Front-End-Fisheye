@@ -1,7 +1,7 @@
 async function contactForm(photographerName) {
 	return `
     <div class="modal-overlay"></div>
-	<div class="contactForm-content" role="dialog" aria-hidden="false" tabindex="-1">
+	<div class="contactForm-content" role="dialog" aria-hidden="false">
 		<header class="header-form">
 			<h2 id="title-contactform-modal">Contactez-moi <br> ${photographerName}</h2>
 		</header>
@@ -30,15 +30,13 @@ async function contactForm(photographerName) {
 				<path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white"/>
 			</svg>
 		</button>
-	</div>
-
-    	
+	</div>    	
 	`;
 }
 
 function sendContactForm(modalContent, photographerName) {
 	// DOM elements
-	const contactFormContent = modalContent.querySelector(".contactFormContent");
+	const contactFormContent = modalContent.querySelector(".contactForm-content");
 	const form = modalContent.querySelector(".contactFormBody");
 	const firstName = modalContent.querySelector("#first");
 	const lastName = modalContent.querySelector("#last");
@@ -107,13 +105,28 @@ function sendContactForm(modalContent, photographerName) {
 			messageSent.message = message.value.trim();
 
 			contactFormContent.innerHTML = `
-				<p class="div-success"> Votre message a été envoyé avec succès. </p>			 
+				<p class="div-success"> Votre message a été envoyé avec succès. </p>
 			`;
 			contactFormContent.classList.add("succes-msg");
 
 			console.log(messageSent);
+			closeModalIfSuccess(modalContent, contactFormContent);
 		}
 	});
+}
+
+function closeModalIfSuccess(modal, content) {
+	// Ferme la modal automatiquement après 2 secondes
+	setTimeout(function() {
+		modal.style.visibility = "hidden";
+
+		const baliseMain = document.querySelector("main");
+		const header = document.querySelector("header");
+
+		baliseMain.setAttribute("aria-hidden", "false");
+		header.setAttribute("aria-hidden", "false");
+		content.setAttribute("aria-hidden", "true");
+	}, 2000); // 2000 ms = 2 secondes
 }
 
 export { contactForm, sendContactForm };

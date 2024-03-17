@@ -1,5 +1,5 @@
-//import {createModal} from "../utils/modal.js";
 import {contactForm, sendContactForm} from "../utils/contactForm.js";
+import {lightbox, updateIndexToNextMedia, updateIndexToPreviousMedia, updateContent} from "../utils/lightbox.js";
 
 class PhotographerApp {
 	constructor() {
@@ -44,15 +44,14 @@ class PhotographerApp {
 		const contactFormModalContent = await contactForm(photographer.name);
 		contactButtons.addEventListener("click", () => {
 			contactFormModal.innerHTML = contactFormModalContent;
-			this.openModal(contactFormModal);
+			openModal(contactFormModal);
 
 			const firstField = document.querySelector("#first");
 			firstField.focus();
 
 			sendContactForm(contactFormModal, photographer.name);
-			this.closeModale(contactFormModal);
+			closeModale(contactFormModal);
 		});
-
 
 
 		/////////////////////////////// PARTIE GALERIE //////////////////////////////////////
@@ -158,15 +157,28 @@ class PhotographerApp {
 					gallery.appendChild(template.getMediaCardDOM());
 				});
 
-			// ouverture de la modale
+			//// ouverture de la lightbox
 			const mediaThumbnail = document.querySelectorAll(".media-thumbnail");
+			const lightboxModal = document.querySelector(".modal-lightbox");
+
 			mediaThumbnail.forEach((element, index) => {
-				//au click
-				element.addEventListener("click", () => toggleModal(element, index, allMedia));
-				//si appui sur "enter" au focus
+				const lightboxModalContent = lightbox(allMedia, index);
+
+				element.addEventListener("click", () => {
+					lightboxModal.innerHTML = lightboxModalContent;
+					openModal(lightboxModal);
+					closeModale(lightboxModal);
+
+					gestionBtndirectionnel(index);
+				});
+
 				element.addEventListener("keydown", (event) =>{
 					if ((event.key === "Enter" || event.keyCode === 13)) {
-						toggleModal(element, index, allMedia);
+						lightboxModal.innerHTML = lightboxModalContent;
+						openModal(lightboxModal);
+						closeModale(lightboxModal);
+
+						gestionBtndirectionnel(index);
 					}
 				});
 			});
@@ -231,61 +243,85 @@ class PhotographerApp {
 			// });
 		}
 
-		// Fonction pour basculer l'état de la modal en active
-		function toggleModal(clickedElement, index, allMedia) {
-			const modalContainer = document.querySelector(".modal");
-			if (!modalContainer) {
-				createModal(clickedElement, index, allMedia, photographer.name);
-			}
+		function openModal(divContainer){
+			// divContainer.style.display = "block";
+			divContainer.style.visibility = "visible";
+
 			const baliseMain = document.querySelector("main");
+			const header = document.querySelector("header");
 			baliseMain.setAttribute("aria-hidden", "true");
+			header.setAttribute("aria-hidden", "true");
+		}
+
+		function closeModale(modal){
+			const closeModalBtn = document.querySelectorAll("#closeModalBtn");
+			const baliseMain = document.querySelector("main");
+			const header = document.querySelector("header");
+			const modalOverlay = document.querySelector(".modal-overlay");
+
+			closeModalBtn.forEach((button) => {
+				button.addEventListener("click", () => {
+					// modal.style.display = "none";
+					modal.style.visibility = "hidden";
+					baliseMain.setAttribute("aria-hidden", "false");
+					header.setAttribute("aria-hidden", "false");
+					modal.setAttribute("aria-hidden", "true");
+				});
+			});
+			modalOverlay.addEventListener("click", () => {
+				// modalContainer.remove();
+				// baliseMain.setAttribute("aria-hidden", "false");
+				modal.style.visibility = "hidden";
+				baliseMain.setAttribute("aria-hidden", "false");
+				header.setAttribute("aria-hidden", "false");
+				modal.setAttribute("aria-hidden", "true");
+			});
+			window.addEventListener("keydown", (event) =>{
+				if (event.key === "Escape" || event.key === "Esc") {
+					modal.style.visibility = "hidden";
+					baliseMain.setAttribute("aria-hidden", "false");
+					header.setAttribute("aria-hidden", "false");
+					modal.setAttribute("aria-hidden", "true");
+				}
+			});
+		}
+
+		function gestionBtndirectionnel(index) {
+			const btnLeft = document.querySelector(".leftBtn");
+			const btnRight = document.querySelector(".rightBtn");
+			const mediaLightbox = document.querySelector(".mediaLightbox");
+
+			btnLeft.focus();
+
+			btnLeft.addEventListener("click", (event) => {
+				event.preventDefault();
+				const newIndex = updateIndexToPreviousMedia(allMedia.length, index);
+				index = newIndex;
+
+				mediaLightbox.innerHTML = updateContent(allMedia, newIndex);
+			});
+			document.addEventListener("keydown", function (event) {
+				if (event.code === "ArrowLeft") {
+					btnLeft.click();
+				}
+			});
+
+			btnRight.addEventListener("click", (event) => {
+				event.preventDefault();
+				const newIndex = updateIndexToNextMedia(allMedia.length, index);
+				index = newIndex;
+
+				mediaLightbox.innerHTML = updateContent(allMedia, newIndex);
+
+			});
+			document.addEventListener("keydown", function (event) {
+				if (event.code === "ArrowRight") {
+					btnRight.click();
+				}
+			});
 		}
 	}
-
-	///////////////////////
-	openModal(divContainer){
-		console.log("modal ouverte");
-		divContainer.style.display = "block";
-		const baliseMain = document.querySelector("main");
-		baliseMain.setAttribute("aria-hidden", "true");
-	}
-
-	closeModale(modal){
-		const closeModalBtn = document.querySelectorAll("#closeModalBtn");
-		const baliseMain = document.querySelector("main");
-		const modalOverlay = document.querySelector(".modal-overlay");
-		console.log(modalOverlay);
-
-		closeModalBtn.forEach((button) => {
-			button.addEventListener("click", () => {
-				modal.style.display = "none";
-				baliseMain.setAttribute("aria-hidden", "false");
-			});
-		});
-		modalOverlay.addEventListener("click", () => {
-			// modalContainer.remove();
-			// baliseMain.setAttribute("aria-hidden", "false");
-			modal.style.display = "none";
-			baliseMain.setAttribute("aria-hidden", "false");
-		});
-		window.addEventListener("keydown", (event) =>{
-			if (event.key === "Escape" || event.key === "Esc") {
-				modal.style.display = "none";
-			}
-			baliseMain.setAttribute("aria-hidden", "false");
-		});
-	}
-
-	async createContactFormModal(){
-
-	}
-	async createLightBoxModal(){
-
-	}
-
 }
 
 const photographerApp = new PhotographerApp();
 photographerApp.main();
-
-
