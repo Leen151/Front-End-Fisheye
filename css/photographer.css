@@ -57,7 +57,7 @@
     align-items: center;
 }
 
-.photographer-infos .more-details svg {
+.photographer-infos .more-details .heart {
     margin-left: 4px;
     margin-right: 65px;
 }
@@ -96,8 +96,7 @@
     row-gap: 20px;
 }
 
-.photographer-gallery img,
-.photographer-gallery video {
+.photographer-gallery .media-thumbnail {
     height: 300px;
     width: 350px;
     object-fit: cover;
@@ -125,10 +124,10 @@
     margin: 0;
 }
 
-.likes svg {
-    margin-right: 2px;
+.heart{
     margin-left: 4px;
-    /*margin-top: 4px;*/
+    width: 22px;
+    height: auto;
 }
 
 .likes p {
@@ -285,10 +284,6 @@ form textarea {
 .lightbox-content {
     display: flex;
     align-items: center;
-}
-
-.lightbox-content svg path {
-    fill: #901C1C;
 }
 
 .mediaLightbox img,

@@ -8,19 +8,19 @@ async function contactForm(photographerName) {
 		<form class="contactFormBody">
 			<div>
 				<label for="first" id="first-label">Prénom</label>
-				<input class="text-control" type="text" id="first" name="first" aria-labelledby="first-label">
+				<input class="text-control" type="text" id="first" name="first" aria-labelledby="first-label" aria-required=true>
 				<span class="error" id="errorFirst"></span>
 				
 				<label for="last" id="last-label">Nom</label>
-				<input class="text-control" type="text" id="last" name="last" aria-labelledby="last-label">
+				<input class="text-control" type="text" id="last" name="last" aria-labelledby="last-label" aria-required=true>
 				<span class="error" id="errorLast"></span>
 				
 				<label for="email" id="email-label">E-mail</label>
-				<input class="text-control" type="text" id="email" name="email" aria-labelledby="email-label">
+				<input class="text-control" type="text" id="email" name="email" aria-labelledby="email-label" aria-required=true>
 				<span class="error" id="errorEmail"></span>
 				
 				<label for="messageForm" id="messge-label">Message</label> 
-				<textarea rows="4" id="messageForm" aria-labelledby="messge-label"></textarea>
+				<textarea rows="4" id="messageForm" aria-labelledby="messge-label" aria-required=true></textarea>
 				<span class="error" id="errorMessageForm"></span>
 			</div>		
 			<button class="send_btn" id="sendBtn" type="submit">Envoyer</button>
