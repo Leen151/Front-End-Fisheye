@@ -10,8 +10,6 @@ class PhotographerApp {
 	}
 
 	async main() {
-		const body = document.querySelector("body");
-
 		////////////////////////////////////// PROFIL PHOTOGRAPHE //////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////////
 		// on recherche le paramètre "photographer" dans l'url qui correspond à l'id
@@ -32,10 +30,8 @@ class PhotographerApp {
 
 		//on récupère l'element du DOM
 		const photographerInfosSection = document.querySelector(".photographer-infos");
-
 		const template = new PhotographerProfile(photographer, totalLikes);
 		photographerInfosSection.innerHTML = await template.getPhotographerPageDOM();
-
 
 		// on récupére le bouton pour afficher le formulaire de contact
 		// on crée l'event listener
@@ -66,7 +62,6 @@ class PhotographerApp {
 		// gestion du tri avec un select
 		sortBtn.addEventListener("change", () => {
 			const selectedOption = sortBtn.value;
-
 			switch (selectedOption) {
 			case "filterTitle":
 				sortByTitle();
@@ -157,7 +152,7 @@ class PhotographerApp {
 					gallery.appendChild(template.getMediaCardDOM());
 				});
 
-			//// ouverture de la lightbox
+			// ouverture de la lightbox
 			const mediaThumbnail = document.querySelectorAll(".media-thumbnail");
 			const lightboxModal = document.querySelector(".modal-lightbox");
 
@@ -172,7 +167,7 @@ class PhotographerApp {
 					gestionBtndirectionnel(index);
 				});
 
-				element.addEventListener("keydown", (event) =>{
+				element.addEventListener("keydown", (event) => {
 					if ((event.key === "Enter" || event.keyCode === 13)) {
 						lightboxModal.innerHTML = lightboxModalContent;
 						openModal(lightboxModal);
@@ -243,7 +238,7 @@ class PhotographerApp {
 			// });
 		}
 
-		function openModal(divContainer){
+		function openModal(divContainer) {
 			// divContainer.style.display = "block";
 			divContainer.style.visibility = "visible";
 
@@ -253,7 +248,7 @@ class PhotographerApp {
 			header.setAttribute("aria-hidden", "true");
 		}
 
-		function closeModale(modal){
+		function closeModale(modal) {
 			const closeModalBtn = document.querySelectorAll("#closeModalBtn");
 			const baliseMain = document.querySelector("main");
 			const header = document.querySelector("header");
@@ -276,7 +271,7 @@ class PhotographerApp {
 				header.setAttribute("aria-hidden", "false");
 				modal.setAttribute("aria-hidden", "true");
 			});
-			window.addEventListener("keydown", (event) =>{
+			window.addEventListener("keydown", (event) => {
 				if (event.key === "Escape" || event.key === "Esc") {
 					modal.style.visibility = "hidden";
 					baliseMain.setAttribute("aria-hidden", "false");

@@ -1,7 +1,9 @@
 class MediasFactory {
-	// 2 attributs
-	// data : données retournées par le json
-	// type : source des données (photo ou vidéo)
+	/**
+	 * @param data - données retournées par le json
+	 * @param type - type du media (photo ou video)
+	 * @param photographerName - nécessaire aux constructeurs
+	 */
 	constructor(data, type, photographerName) {
 		if (type === "photo") {
 			return new Photo(data, photographerName);

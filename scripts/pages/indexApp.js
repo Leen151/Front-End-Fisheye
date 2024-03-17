@@ -5,8 +5,10 @@ class IndexApp {
 	}
 
 	async main() {
+		//récupération des données
 		const photographersData = await this.photographersApi.getPhotographers();
 
+		//construction du html
 		photographersData
 			.map(photographer => new Photographer(photographer))
 			.forEach(photographer => {

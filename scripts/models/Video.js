@@ -7,7 +7,7 @@ class Video {
 		this._likes = video.likes;
 		this._date = video.date;
 		this._price = video.price;
-		this._photographerMediaSrc = photographerName.replace(" ", "_");
+		this._photographerMediaSrc = photographerName.replace(" ", "_"); //construction dynamique du chemin vers les fichiers média
 	}
 
 	get id() {

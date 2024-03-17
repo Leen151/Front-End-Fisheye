@@ -60,8 +60,4 @@ class MediaApi extends Api {
 				.map(item => item.likes)
 			);
 	}
-
-	// async getMediaById(id){
-	// 	return this.getById(id, "media");
-	// }
 }

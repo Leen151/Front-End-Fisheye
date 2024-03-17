@@ -28,13 +28,12 @@
     <section class="photographer-gallery" aria-label="Galerie">
         <div class="filters-content">
             <label for="sort-btn">Trier par</label>
-            <select name="sort" id="sort-btn">
+            <select name="sort" id="sort-btn" aria-label="selectionnez une option de tri">
                 <option class="filters" id="filterLikes" value="filterLikes">Popularité</option>
                 <option class="filters" id="filterDate" value="filterDate">Date</option>
                 <option class="filters" id="filterTitle" value="filterTitle">Titre</option>
             </select>
         </div>
-
         <div class="gallery"></div>
     </section>
 </main>
@@ -53,7 +52,7 @@
 <script src="scripts/api/Api.js"></script>
 <!-- Entry point -->
 <script type="module" src="/scripts/pages/photographerApp.js"></script>
-
+<!-- Modal management -->
 <script type="module" src="/scripts/utils/contactForm.js"></script>
 <script type="module" src="/scripts/utils/lightbox.js"></script>
 

@@ -7,7 +7,7 @@ class Photo {
 		this._likes = photo.likes;
 		this._date = photo.date;
 		this._price = photo.price;
-		this._photographerMediaSrc = photographerName.replace(" ", "_");
+		this._photographerMediaSrc = photographerName.replace(" ", "_"); //construction dynamique du chemin vers les fichiers média
 	}
 
 	get id() {

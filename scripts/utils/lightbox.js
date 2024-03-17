@@ -25,19 +25,17 @@ function lightbox(allMedia, index){
 	<div class="modal-overlay"></div>
 	<div class="lightbox-content" role="dialog" aria-hidden="false">	
 		<button class="leftBtn">
-			<img src="../../assets/icons/chevron-left-solid.svg" alt="">
+			<img src="../../assets/icons/chevron-left-solid.svg" alt="média précédant">
 		</button>
 		<div class="mediaLightbox">		
 			${baliseMedia}
 			<h2>${imageTitle}</h2>
 		</div>
 		<button class="rightBtn">
-			<img src="../../assets/icons/chevron-right-solid.svg" alt="">
+			<img src="../../assets/icons/chevron-right-solid.svg" alt="média suivant">
 		</button>	
-		<button class="close_modal" id="closeModalBtn">
-			<svg  width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white"/>
-			</svg>
+		<button class="close_modal" id="closeModalBtn" aria-label="Fermer la modal">
+			<img src="../../assets/icons/close2.svg" alt="fermer la lightbox">
 		</button>	
 	</div>
 	`;

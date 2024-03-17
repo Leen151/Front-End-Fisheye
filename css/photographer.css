@@ -96,11 +96,6 @@
     row-gap: 20px;
 }
 
-/* .photographer-gallery a{
-    display: inline-block;
-    height: 300px;
-    width: 350px;
-} */
 .photographer-gallery img,
 .photographer-gallery video {
     height: 300px;
@@ -194,17 +189,15 @@
     border: none;
 }
 
-.rightBtn, .leftBtn{
+.rightBtn, .leftBtn {
     background: none;
     border: none;
 }
 
-
-.modal-contactForm, .modal-lightbox{
+.modal-contactForm, .modal-lightbox {
     /* display: none; */
     visibility: hidden;
 }
-
 
 /* contact form */
 .contactForm-content .close_modal {
