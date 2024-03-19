@@ -250,7 +250,7 @@ class PhotographerApp {
 		}
 
 		function closeModale(modal) {
-			const closeModalBtn = document.querySelectorAll("#closeModalBtn");
+			const closeModalBtn = document.querySelectorAll(".close_modal");
 			const baliseMain = document.querySelector("main");
 			const header = document.querySelector("header");
 			const modalOverlay = document.querySelector(".modal-overlay");

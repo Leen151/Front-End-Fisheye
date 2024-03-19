@@ -25,7 +25,7 @@ async function contactForm(photographerName) {
 			</div>		
 			<button class="send_btn" id="sendBtn" type="submit">Envoyer</button>
 		</form>	
-		<button class="close_modal" id="closeModalBtn" aria-label="Fermer la modal">
+		<button class="close_modal" aria-label="Fermer la modal">
 			<img src="../../assets/icons/close.svg" alt="fermer le formulaire de contact">
 		</button>
 	</div>    	

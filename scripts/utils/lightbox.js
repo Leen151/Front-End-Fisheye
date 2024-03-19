@@ -34,7 +34,7 @@ function lightbox(allMedia, index){
 		<button class="rightBtn">
 			<img src="../../assets/icons/chevron-right-solid.svg" alt="média suivant">
 		</button>	
-		<button class="close_modal" id="closeModalBtn" aria-label="Fermer la modal">
+		<button class="close_modal" aria-label="Fermer la modal">
 			<img src="../../assets/icons/close2.svg" alt="fermer la lightbox">
 		</button>	
 	</div>
