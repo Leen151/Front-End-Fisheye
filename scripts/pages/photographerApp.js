@@ -1,5 +1,5 @@
 import {contactForm, sendContactForm} from "../utils/contactForm.js";
-import {lightbox, updateIndexToNextMedia, updateIndexToPreviousMedia, updateContent} from "../utils/lightbox.js";
+import {lightbox, updateContent, updateIndexToNextMedia, updateIndexToPreviousMedia} from "../utils/lightbox.js";
 
 class PhotographerApp {
 	constructor() {
@@ -42,8 +42,7 @@ class PhotographerApp {
 			contactFormModal.innerHTML = contactFormModalContent;
 			openModal(contactFormModal);
 
-			const firstField = document.querySelector("#first");
-			firstField.focus();
+			document.querySelector(".contactForm-content").focus();
 
 			sendContactForm(contactFormModal, photographer.name);
 			closeModale(contactFormModal);
@@ -63,14 +62,14 @@ class PhotographerApp {
 		sortBtn.addEventListener("change", () => {
 			const selectedOption = sortBtn.value;
 			switch (selectedOption) {
-			case "filterTitle":
-				sortByTitle();
+			case "filterLikes":
+				sortByLikes();
 				break;
 			case "filterDate":
 				sortByDate();
 				break;
-			case "filterLikes":
-				sortByLikes();
+			case "filterTitle":
+				sortByTitle();
 				break;
 			}
 		});
@@ -157,23 +156,25 @@ class PhotographerApp {
 			const lightboxModal = document.querySelector(".modal-lightbox");
 
 			mediaThumbnail.forEach((element, index) => {
-				const lightboxModalContent = lightbox(allMedia, index);
-
 				element.addEventListener("click", () => {
-					lightboxModal.innerHTML = lightboxModalContent;
+					lightboxModal.innerHTML = lightbox(allMedia, index);
 					openModal(lightboxModal);
 					closeModale(lightboxModal);
 
-					gestionBtndirectionnel(index);
+					document.querySelector(".lightbox-content").focus();
+
+					gestionBtndirectionnel(index, allMedia);
 				});
 
 				element.addEventListener("keydown", (event) => {
 					if ((event.key === "Enter" || event.keyCode === 13)) {
-						lightboxModal.innerHTML = lightboxModalContent;
+						lightboxModal.innerHTML = lightbox(allMedia, index);
 						openModal(lightboxModal);
 						closeModale(lightboxModal);
 
-						gestionBtndirectionnel(index);
+						document.querySelector(".lightbox-content").focus();
+
+						gestionBtndirectionnel(index, allMedia);
 					}
 				});
 			});
@@ -281,12 +282,10 @@ class PhotographerApp {
 			});
 		}
 
-		function gestionBtndirectionnel(index) {
+		function gestionBtndirectionnel(index, allMedia) {
 			const btnLeft = document.querySelector(".leftBtn");
 			const btnRight = document.querySelector(".rightBtn");
 			const mediaLightbox = document.querySelector(".mediaLightbox");
-
-			btnLeft.focus();
 
 			btnLeft.addEventListener("click", (event) => {
 				event.preventDefault();

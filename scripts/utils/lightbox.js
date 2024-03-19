@@ -5,7 +5,7 @@ function lightbox(allMedia, index){
 	// on va construire une balise selon qu'on a une image ou une video comme média
 	let baliseMedia = null;
 	if(allMedia[index].image){
-		baliseMedia = `<img src="${allMedia[index].image}" alt="${imageTitle}" tabindex="0">`;
+		baliseMedia = `<img src="${allMedia[index].image}" alt="${imageTitle}">`;
 	}
 	else if(allMedia[index].video){
 		baliseMedia = ` 
@@ -23,7 +23,7 @@ function lightbox(allMedia, index){
 
 	return `
 	<div class="modal-overlay"></div>
-	<div class="lightbox-content" role="dialog" aria-hidden="false">	
+	<div class="lightbox-content" role="dialog" aria-hidden="false" tabindex="0">
 		<button class="leftBtn">
 			<img src="../../assets/icons/chevron-left-solid.svg" alt="média précédant">
 		</button>

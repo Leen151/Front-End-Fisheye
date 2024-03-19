@@ -1,7 +1,7 @@
 async function contactForm(photographerName) {
 	return `
     <div class="modal-overlay"></div>
-	<div class="contactForm-content" role="dialog" aria-hidden="false">
+	<div class="contactForm-content" role="dialog" aria-hidden="false" tabindex="0">
 		<header class="header-form">
 			<h2 id="title-contactform-modal">Contactez-moi <br> ${photographerName}</h2>
 		</header>
